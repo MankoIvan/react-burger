@@ -1,0 +1,80 @@
+@import '../../constants/colors.scss';
+
+.wrapper {
+  flex: 1;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.anchors_block {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.anchor {
+  flex: 1;
+  padding: 16px 0;
+  color: $GREYISH_PURPLE;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+
+  &__active {
+    color: $WHITE;
+    box-shadow: inset 0px -2px 0px $BLUE;
+  }
+
+  &:hover {
+    color: $WHITE;
+    box-shadow: inset 0px -2px 0px $BLUE;
+  }
+}
+
+.ingredients_container {
+  overflow: auto;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredient_block {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 24px 8px 40px 16px;
+  row-gap: 32px;
+  column-gap: 24px;
+
+}
+
+.ingredient {
+  width: 272px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  &_img {
+    height: 120px;
+    width: 240px;
+
+  }
+
+  &_price {
+    display: flex;
+    gap: 8px
+  }
+}
+
+.tabs {
+  display: flex;
+  margin-top: 20px;
+}

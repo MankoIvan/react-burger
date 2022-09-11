@@ -1,0 +1,35 @@
+@import '../../../../constants/colors.scss';
+
+.nav_button {
+  padding: 16px 20px;
+  color: $GREYISH_PURPLE;
+  background-color: transparent;
+  border-radius: 40px;
+  border: 1px solid transparent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  svg {
+    transition: all 0.25s ease;
+    fill: $GREYISH_PURPLE;
+  }
+
+  &:hover {
+    color: $WHITE;
+
+    svg {
+      fill: $WHITE;
+    }
+  }
+
+  &__active {
+    color: $WHITE;
+
+    svg {
+      fill: $WHITE;
+    }
+  }
+}

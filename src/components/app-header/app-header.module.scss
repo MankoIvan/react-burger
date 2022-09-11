@@ -1,0 +1,37 @@
+@import '../../constants/colors.scss';
+
+.header {
+  background-color: $DARK_GREY;
+  width: 100%;
+  padding: 16px 0;
+}
+
+.navigation {
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.nav_part {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px
+}
+
+.nav_left {
+  @extend .nav_part;
+  justify-content: flex-start
+}
+
+.nav_right {
+  @extend .nav_part;
+  justify-content: flex-end;
+}
+
+.nav_logo {
+  
+}
