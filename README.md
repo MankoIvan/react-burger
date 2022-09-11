@@ -5,7 +5,7 @@
 
 ## Инструкция по развертыванию:
 - клонируйте репозиторий `https://github.com/MankoIvan/react-burger.git`
-- уcтановите зависимости npm `npm install` или `yarn`
+- уcтановите зависимости `npm install` или `yarn`
 - запуск проекта в режиме разработчика `npm run start` или `yarn start`
 
 ## Процесс
