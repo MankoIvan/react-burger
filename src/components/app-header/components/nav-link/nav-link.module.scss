@@ -1,6 +1,6 @@
 @import '../../../../constants/colors.scss';
 
-.nav_button {
+.nav_link {
   padding: 16px 20px;
   color: $GREYISH_PURPLE;
   background-color: transparent;
@@ -11,6 +11,7 @@
   gap: 8px;
   cursor: pointer;
   transition: all 0.25s ease;
+  text-decoration: none;
 
   svg {
     transition: all 0.25s ease;

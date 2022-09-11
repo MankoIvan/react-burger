@@ -1,45 +1,61 @@
+@import '../../constants/colors.scss';
+
 .wrapper {
   flex: 1;
-  padding: 100px 16px 40px;
-  overflow: auto;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-}
-
-.ingredients_list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
   overflow: auto;
 }
 
-.filling_list {
+.anchors_block {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 16px;
-  overflow: auto;
-}
-
-.ce_make_wide {
-  box-sizing: border-box;
+  flex-direction: row;
   width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
-.cta_block {
-  display: flex;
-  gap: 40px;
-  align-self: flex-end;
-}
-
-.price {
+.anchor {
+  flex: 1;
+  padding: 16px 0;
+  color: $GREYISH_PURPLE;
+  text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 8px;
-  svg {
-    width: 36px;
-    height: 36px;
+  justify-content: center;
+  transition: all 0.25s ease;
+
+  &__active {
+    color: $WHITE;
+    box-shadow: inset 0px -2px 0px $BLUE;
   }
+
+  &:hover {
+    color: $WHITE;
+    box-shadow: inset 0px -2px 0px $BLUE;
+  }
+}
+
+.ingredients_container {
+  overflow: auto;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredient_block {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 24px 8px 40px 16px;
+  row-gap: 32px;
+  column-gap: 24px;
+
+}
+
+.tabs {
+  display: flex;
+  margin-top: 20px;
 }

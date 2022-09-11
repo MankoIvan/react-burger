@@ -1,0 +1,77 @@
+@import '../../constants/colors.scss';
+
+.loader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.outer_orbit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 200px;
+  width: 200px;
+  border: 1px solid $GREYISH_PURPLE;
+  border-radius: 50%;
+  animation: orbit_outer 4s infinite linear;
+}
+
+.inner_orbit {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  border: 1px solid $GREYISH_PURPLE;
+  border-radius: 50%;
+  animation: orbit_inner 3s infinite linear;
+}
+
+.outer_planet, .inner_planet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  padding: 10px;
+  top: -20px;
+  left: calc(50% - 20px);
+  background-color: $BLACK;
+  border-radius: 50%;
+  animation: planet 6s infinite linear;
+
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+@keyframes planet {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg
+  }
+}
+
+@keyframes orbit_outer {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg
+  }
+}
+
+@keyframes orbit_inner {
+  0% {
+    rotate: 360deg;
+  }
+  100% {
+    rotate: 0deg
+  }
+}

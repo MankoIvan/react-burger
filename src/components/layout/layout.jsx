@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './layout.module.scss'
 
-const Layout = ({children}) => {
+const Layout = ({ children }) => {
   return (
     <div className={styles.layout}>
       {children}

@@ -1,83 +1,103 @@
-import React, { useState, useEffect } from 'react'
-import styles from './burger-ingredients.module.scss'
-import { mockedBun, mockedFilling } from '../../utils/mockedData'
-import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import React, { useEffect, useState } from 'react'
+import { getIngredientsData } from '../../utils/burger-api'
+import IngredientCard from '../ingredient-card/ingredient-card'
+import IngredientDetails from '../ingredient-details/ingredient-details'
+import Loader from '../loader/loader'
 import Modal from '../modal/modal'
-import OrderDetails from '../order-deatils/order-deatils'
+import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
 
-  const [bun, setBun] = useState({})
-  const [filling, setFilling] = useState([])
-  const [showModal, setShowModal] = useState(false)
-
-  const countPrice = (ingredients) => {
-    return ingredients.reduce((acc, item) => acc + item.price, 0)
-  }
+  const [ingredients, setIngredients] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [modalIngredient, setModalIngredient] = useState({});
+  const [currentTab, setCurrentTab] = React.useState('bun');
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    setBun(mockedBun);
-    setFilling(mockedFilling)
+    setLoading(true)
+    getIngredientsData().then(data => {
+      setIngredients(data)
+      setLoading(false)
+    })
   }, [])
 
   const toggleModal = () => {
-    setShowModal(prev => !prev)
+    setShowModal(prev => !prev);
   }
 
+  const showIngredientDetails = (ingredient) => {
+    setModalIngredient(ingredient);
+    toggleModal();
+  }
 
   return (
     <>
       <section className={styles.wrapper}>
-        {/* Доделать паддинги с учетом dnd в следующем спринте */}
-        <div className={styles.ingredients_list}>
-          {bun && (
-            <ConstructorElement
-              type='top'
-              isLocked
-              text={bun.name}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
-          )}
-          {filling && (
-            <div className={styles.filling_list}>
-              {filling.map((item, index) => {
-                return (
-                  <ConstructorElement
-                    key={index}
-                    text={item.name}
-                    price={item.price}
-                    thumbnail={item.image_mobile}
-                  />
-                )
-              })}
+        <h1 className="text text_type_main-large">
+          Соберите бургер
+        </h1>
+        {loading ? (
+          <Loader />
+        ) : (
+          <>
+            <div className={styles.tabs}>
+              <Tab value="bun" active={currentTab === 'bun'} onClick={setCurrentTab}>
+                Булки
+              </Tab>
+              <Tab value="sauce" active={currentTab === 'sauce'} onClick={setCurrentTab}>
+                Соусы
+              </Tab>
+              <Tab value="main" active={currentTab === 'main'} onClick={setCurrentTab}>
+                Начинки
+              </Tab>
             </div>
-          )}
-          {bun && (
-            <ConstructorElement
-              type='bottom'
-              isLocked
-              text={bun.name}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
-          )}
-        </div>
-        <div className={styles.cta_block}>
-          <div className={styles.price}>
-            <p className="text text_type_main-large">
-              {countPrice([...filling, bun, bun]) || 0}
-            </p>
-            <CurrencyIcon />
-          </div>
-          <Button type="primary" size="large" onClick={toggleModal}>
-            Оформить заказ
-          </Button>
-        </div>
+
+            <div className={styles.ingredients_container}>
+              {ingredients.bun && (
+                <>
+                  <h3 className="text text_type_main-medium" id='bun'>
+                    Булки
+                  </h3>
+                  <div className={styles.ingredient_block}>
+                    {ingredients.bun.map((item) =>
+                      <IngredientCard ingredient={item} onClick={() => showIngredientDetails(item)} key={item._id} />
+                    )}
+                  </div>
+                </>
+              )}
+              {ingredients.sauce && (
+                <>
+                  <h3 className="text text_type_main-medium" id='main'>
+                    Соусы
+                  </h3>
+                  <div className={styles.ingredient_block}>
+                    {ingredients.sauce.map((item) =>
+                      <IngredientCard ingredient={item} onClick={() => showIngredientDetails(item)} key={item._id} />
+                    )}
+                  </div>
+                </>
+              )}
+              {ingredients.main && (
+                <>
+                  <h3 className="text text_type_main-medium" id='sauce'>
+                    Начинки
+                  </h3>
+                  <div className={styles.ingredient_block}>
+                    {ingredients.main.map((item) =>
+                      <IngredientCard ingredient={item} onClick={() => showIngredientDetails(item)} key={item._id} />
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+          </>
+        )}
       </section>
       {showModal && (
-        <Modal header='header' onClose={toggleModal}>
-          <OrderDetails />
+        <Modal onClose={toggleModal} header='Детали ингредиента'>
+          <IngredientDetails ingredient={modalIngredient} />
         </Modal>
       )}
     </>
