@@ -31,9 +31,9 @@ const Modal = ({ children, header, onClose }) => {
           <CloseIcon />
         </button>
         {header && (
-          <p className="text text_type_main-large pt-3 pb-3">
+          <h2 className="text text_type_main-large pt-3 pb-3">
             {header}
-          </p>
+          </h2>
         )}
         {children}
       </div>

@@ -12,7 +12,7 @@ const BurgerIngredients = () => {
   const [ingredients, setIngredients] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [modalIngredient, setModalIngredient] = useState({});
-  const [currentTab, setCurrentTab] = React.useState('bun');
+  const [currentTab, setCurrentTab] = useState('bun');
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -21,6 +21,7 @@ const BurgerIngredients = () => {
       setIngredients(data)
       setLoading(false)
     })
+      .catch(() => alert('Что-то пошло не так на этапе сортировки ингридиентов. Пожалуйста перезагрузите страницу.'))
   }, [])
 
   const toggleModal = () => {
@@ -62,7 +63,7 @@ const BurgerIngredients = () => {
                   </h3>
                   <div className={styles.ingredient_block}>
                     {ingredients.bun.map((item) =>
-                      <IngredientCard ingredient={item} onClick={() => showIngredientDetails(item)} key={item._id} />
+                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
                     )}
                   </div>
                 </>
@@ -74,7 +75,7 @@ const BurgerIngredients = () => {
                   </h3>
                   <div className={styles.ingredient_block}>
                     {ingredients.sauce.map((item) =>
-                      <IngredientCard ingredient={item} onClick={() => showIngredientDetails(item)} key={item._id} />
+                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
                     )}
                   </div>
                 </>
@@ -86,7 +87,7 @@ const BurgerIngredients = () => {
                   </h3>
                   <div className={styles.ingredient_block}>
                     {ingredients.main.map((item) =>
-                      <IngredientCard ingredient={item} onClick={() => showIngredientDetails(item)} key={item._id} />
+                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
                     )}
                   </div>
                 </>

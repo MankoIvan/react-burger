@@ -5,7 +5,12 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import styles from './ingredient-card.module.scss'
 
 
-const IngredientCard = ({ ingredient, onClick }) => {
+const IngredientCard = ({ ingredient, showIngredientDetails }) => {
+
+  const onClick = () => {
+    showIngredientDetails(ingredient)
+  }
+
   return (
     <div className={styles.ingredient} onClick={onClick}>
       <img src={ingredient.image} alt={ingredient.name} className={styles.ingredient_img} />
@@ -22,8 +27,8 @@ const IngredientCard = ({ ingredient, onClick }) => {
 }
 
 IngredientCard.propTypes = {
-  ingredient: ingredientPropTypes,
-  onClick: PropTypes.func.isRequired
+  ingredient: ingredientPropTypes.isRequired,
+  showIngredientDetails: PropTypes.func.isRequired
 }
 
 export default IngredientCard

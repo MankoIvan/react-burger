@@ -13,7 +13,7 @@ const BurgerConstructor = () => {
   const [totatlPrice, setTotatlPrice] = useState(0)
 
   const countPrice = (ingredients) => {
-    return ingredients.reduce((acc, item) => acc + item.price, 0)
+    return ingredients.reduce((acc, item) => acc + (item.price || 0), 0)
   }
 
   useEffect(() => {
