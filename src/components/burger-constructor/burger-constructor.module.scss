@@ -1,0 +1,55 @@
+.wrapper {
+  flex: 1;
+  padding: 100px 20px 40px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.ingredients_list {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  overflow: auto;
+}
+
+.filling_list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
+  overflow: auto;
+}
+
+.filling_item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.ce_make_wide {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.cta_block {
+  display: flex;
+  gap: 40px;
+  align-self: flex-end;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
+}
