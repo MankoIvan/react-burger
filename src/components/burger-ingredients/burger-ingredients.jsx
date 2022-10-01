@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { getIngredientsData } from '../../utils/burger-api'
 import IngredientCard from '../ingredient-card/ingredient-card'
 import IngredientDetails from '../ingredient-details/ingredient-details'
+import IngredientsGroup from '../ingredients-group/ingredients-group'
 import Loader from '../loader/loader'
 import Modal from '../modal/modal'
 import styles from './burger-ingredients.module.scss'
@@ -56,42 +57,9 @@ const BurgerIngredients = () => {
             </div>
 
             <div className={styles.ingredients_container}>
-              {ingredients.bun && (
-                <>
-                  <h3 className="text text_type_main-medium" id='bun'>
-                    Булки
-                  </h3>
-                  <div className={styles.ingredient_block}>
-                    {ingredients.bun.map((item) =>
-                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
-                    )}
-                  </div>
-                </>
-              )}
-              {ingredients.sauce && (
-                <>
-                  <h3 className="text text_type_main-medium" id='main'>
-                    Соусы
-                  </h3>
-                  <div className={styles.ingredient_block}>
-                    {ingredients.sauce.map((item) =>
-                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
-                    )}
-                  </div>
-                </>
-              )}
-              {ingredients.main && (
-                <>
-                  <h3 className="text text_type_main-medium" id='sauce'>
-                    Начинки
-                  </h3>
-                  <div className={styles.ingredient_block}>
-                    {ingredients.main.map((item) =>
-                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
-                    )}
-                  </div>
-                </>
-              )}
+              <IngredientsGroup ingredients={ingredients.bun} showIngredientDetails={showIngredientDetails} groupName='Булки' type='bun' />
+              <IngredientsGroup ingredients={ingredients.sauce} showIngredientDetails={showIngredientDetails} groupName='Соусы' type='sauce' />
+              <IngredientsGroup ingredients={ingredients.main} showIngredientDetails={showIngredientDetails} groupName='Начинки' type='main' />
             </div>
           </>
         )}

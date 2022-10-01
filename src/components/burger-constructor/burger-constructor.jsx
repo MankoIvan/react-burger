@@ -33,22 +33,24 @@ const BurgerConstructor = () => {
   return (
     <>
       <section className={styles.wrapper}>
-        <div className={styles.ingredients_list}>
+        <div className={styles.ingredients}>
           {bun && (
-            <ConstructorElement
-              type='top'
-              isLocked
-              text={bun.name}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
+            <div className={styles.ingredient}>
+              <ConstructorElement
+                type='top'
+                isLocked
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image_mobile}
+              />
+            </div>
           )}
           {filling && (
             <div className={styles.filling_list}>
               {filling.map((item, index) => {
                 return (
-                  <div className={styles.filling_item} key={index}>
-                    <DragIcon type='primary' />
+                  <div className={styles.ingredient} key={index}>
+                    <DragIcon type="primary" />
                     <ConstructorElement
                       text={item.name}
                       price={item.price}
@@ -60,13 +62,15 @@ const BurgerConstructor = () => {
             </div>
           )}
           {bun && (
-            <ConstructorElement
-              type='bottom'
-              isLocked
-              text={bun.name}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
+            <div className={styles.ingredient}>
+              <ConstructorElement
+                type='bottom'
+                isLocked
+                text={bun.name}
+                price={bun.price}
+                thumbnail={bun.image_mobile}
+              />
+            </div>
           )}
         </div>
         <div className={styles.cta_block}>
