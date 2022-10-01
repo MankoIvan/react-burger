@@ -5,10 +5,10 @@ import IngredientCard from '../ingredient-card/ingredient-card'
 import styles from './ingredients-group.module.scss'
 
 
-const IngredientsGroup = ({ingredients, showIngredientDetails, groupName, type}) => {
+const IngredientsGroup = ({ingredients, showIngredientDetails, groupName, type, groupRef}) => {
   return ingredients && (
     <>
-      <h3 className="text text_type_main-medium" id={type}>
+      <h3 className="text text_type_main-medium" id={type} ref={groupRef}>
         {groupName}
       </h3>
       <div className={styles.ingredient_group}>
@@ -24,7 +24,8 @@ IngredientsGroup.propTypes = {
   ingredients: PropTypes.arrayOf(ingredientPropTypes).isRequired,
   showIngredientDetails: PropTypes.func.isRequired,
   groupName: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  groupRef: PropTypes.object.isRequired
 }
 
 export default IngredientsGroup
