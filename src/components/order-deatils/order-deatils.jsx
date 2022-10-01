@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import doneImage from '../../images/done.png'
 import styles from './order-deatils.module.scss'
 
-const OrderDetails = ({ number }) => {
+const OrderDetails = ({ number = 0 }) => {
 
   const orderNumber = number.toString().padStart(6, '0')
 
@@ -27,7 +27,7 @@ const OrderDetails = ({ number }) => {
 }
 
 OrderDetails.propTypes = {
-  number: PropTypes.number.isRequired
+  number: PropTypes.number
 }
 
 export default OrderDetails

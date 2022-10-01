@@ -1,7 +1,7 @@
 import { INGREDIENTS_URL, ORDER_URL } from "../constants/api";
 import { checkReponse } from "./checkResponse";
 
-export const getIngredientsData = () => {
+export const getIngredientsRequest = () => {
   return fetch(INGREDIENTS_URL)
     .then(checkReponse)
     .then(({ data }) =>
@@ -13,7 +13,7 @@ export const getIngredientsData = () => {
     )
     .catch((err) => Promise.reject(err))
 }
-export const makeOrder = (ingredients) => {
+export const makeOrderRequest = (ingredients) => {
   return fetch(ORDER_URL, {
     method: 'POST',
     headers: {

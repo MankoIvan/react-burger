@@ -1,55 +1,56 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './burger-constructor.module.scss'
-import { mockedBun, mockedFilling } from '../../utils/mockedData'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-deatils/order-deatils'
-import { makeOrder } from '../../utils/burger-api'
 import Loader from '../loader/loader'
+import { makeOrder, toggleModal } from '../../services/actions/order'
+import { removeIngredient } from '../../services/actions/burger-constructor'
 
 const BurgerConstructor = () => {
-
-  const [bun, setBun] = useState({})
-  const [filling, setFilling] = useState([])
-  const [showModal, setShowModal] = useState(false)
   const [totatlPrice, setTotatlPrice] = useState(0)
-  const [orderData, setOrderData] = useState(null)
-  const [loading, setLoading] = useState(false)
+
+  const {
+    bun,
+    filling,
+    orderData,
+    loading,
+    showDetails
+  } = useSelector(store => ({
+    bun: store.burgerConstructor.bun,
+    filling: store.burgerConstructor.filling,
+    orderData: store.order.order,
+    loading: store.order.orderRequest,
+    showDetails: store.order.showDetails
+  }));
+  const dispatch = useDispatch()
 
   const countPrice = (ingredients) => {
     return ingredients.reduce((acc, item) => acc + (item.price || 0), 0)
   }
 
   useEffect(() => {
-    setBun(mockedBun);
-    setFilling(mockedFilling)
-  }, [])
-
-  useEffect(() => {
     setTotatlPrice(countPrice([...filling, bun, bun]) || 0)
   }, [filling, bun])
 
-
-  const toggleModal = () => {
-    setShowModal(prev => !prev)
+  const handleMakeOrder = () => {
+    dispatch(makeOrder([...filling, bun, bun]))
   }
 
-  const handleMakeOrder = () => {
-    setLoading(true)
-    toggleModal()
-    makeOrder([...filling, bun, bun])
-      .then(data => {
-        setOrderData(data.order)
-        setLoading(false)
-      })
-      .catch(() => alert('Что-то пошло не так на этапе создания заказа.'))
+  const handleOnClose = () => {
+    dispatch(toggleModal())
+  }
+
+  const handleRemoveIngredient = (uuid) => {
+    dispatch(removeIngredient(uuid))
   }
 
   return (
     <>
       <section className={styles.wrapper}>
         <div className={styles.ingredients}>
-          {bun && (
+          {!!Object.keys(bun).length ? (
             <div className={styles.ingredient}>
               <ConstructorElement
                 type='top'
@@ -59,8 +60,14 @@ const BurgerConstructor = () => {
                 thumbnail={bun.image_mobile}
               />
             </div>
+          ) : (
+            <div className={styles.ingredient_placeholder}>
+              <p className="text text_type_main-default">
+                Перетащите сюда булочку
+              </p>
+            </div>
           )}
-          {filling && (
+          {!!filling.length ? (
             <div className={styles.filling_list}>
               {filling.map((item, index) => {
                 return (
@@ -70,13 +77,20 @@ const BurgerConstructor = () => {
                       text={item.name}
                       price={item.price}
                       thumbnail={item.image_mobile}
+                      handleClose={() => handleRemoveIngredient(item._uuid)}
                     />
                   </div>
                 )
               })}
             </div>
+          ) : (
+            <div className={styles.ingredient_placeholder}>
+              <p className="text text_type_main-default">
+                Перетащите сюда начинку
+              </p>
+            </div>
           )}
-          {bun && (
+          {!!Object.keys(bun).length ? (
             <div className={styles.ingredient}>
               <ConstructorElement
                 type='bottom'
@@ -85,6 +99,12 @@ const BurgerConstructor = () => {
                 price={bun.price}
                 thumbnail={bun.image_mobile}
               />
+            </div>
+          ) : (
+            <div className={styles.ingredient_placeholder}>
+              <p className="text text_type_main-default">
+                Перетащите сюда булочку
+              </p>
             </div>
           )}
         </div>
@@ -100,8 +120,8 @@ const BurgerConstructor = () => {
           </Button>
         </div>
       </section>
-      {showModal && (
-        <Modal onClose={toggleModal}>
+      {showDetails && (
+        <Modal onClose={handleOnClose}>
           {loading ? (
             <Loader />
           ) : (
