@@ -1,4 +1,4 @@
-import { INGREDIENTS_URL } from "../constants/api";
+import { INGREDIENTS_URL, ORDER_URL } from "../constants/api";
 import { checkReponse } from "./checkResponse";
 
 export const getIngredientsData = () => {
@@ -11,5 +11,19 @@ export const getIngredientsData = () => {
         return acc
       }, {})
     )
+    .catch((err) => Promise.reject(err))
+}
+export const makeOrder = (ingredients) => {
+  return fetch(ORDER_URL, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ingredients: ingredients
+    })
+  })
+    .then(checkReponse)
     .catch((err) => Promise.reject(err))
 }

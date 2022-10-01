@@ -4,6 +4,8 @@ import { mockedBun, mockedFilling } from '../../utils/mockedData'
 import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-deatils/order-deatils'
+import { makeOrder } from '../../utils/burger-api'
+import Loader from '../loader/loader'
 
 const BurgerConstructor = () => {
 
@@ -11,6 +13,8 @@ const BurgerConstructor = () => {
   const [filling, setFilling] = useState([])
   const [showModal, setShowModal] = useState(false)
   const [totatlPrice, setTotatlPrice] = useState(0)
+  const [orderData, setOrderData] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const countPrice = (ingredients) => {
     return ingredients.reduce((acc, item) => acc + (item.price || 0), 0)
@@ -28,6 +32,17 @@ const BurgerConstructor = () => {
 
   const toggleModal = () => {
     setShowModal(prev => !prev)
+  }
+
+  const handleMakeOrder = () => {
+    setLoading(true)
+    toggleModal()
+    makeOrder([...filling, bun, bun])
+      .then(data => {
+        setOrderData(data.order)
+        setLoading(false)
+      })
+      .catch(() => alert('Что-то пошло не так на этапе создания заказа.'))
   }
 
   return (
@@ -80,14 +95,18 @@ const BurgerConstructor = () => {
             </p>
             <CurrencyIcon />
           </div>
-          <Button type="primary" size="large" onClick={toggleModal}>
+          <Button type="primary" size="large" onClick={handleMakeOrder}>
             Оформить заказ
           </Button>
         </div>
       </section>
       {showModal && (
         <Modal onClose={toggleModal}>
-          <OrderDetails />
+          {loading ? (
+            <Loader />
+          ) : (
+            <OrderDetails {...orderData} />
+          )}
         </Modal>
       )}
     </>

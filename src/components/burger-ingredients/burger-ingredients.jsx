@@ -1,7 +1,6 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import React, { useEffect, useState } from 'react'
 import { getIngredientsData } from '../../utils/burger-api'
-import IngredientCard from '../ingredient-card/ingredient-card'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import IngredientsGroup from '../ingredients-group/ingredients-group'
 import Loader from '../loader/loader'
@@ -56,11 +55,13 @@ const BurgerIngredients = () => {
               </Tab>
             </div>
 
-            <div className={styles.ingredients_container}>
-              <IngredientsGroup ingredients={ingredients.bun} showIngredientDetails={showIngredientDetails} groupName='Булки' type='bun' />
-              <IngredientsGroup ingredients={ingredients.sauce} showIngredientDetails={showIngredientDetails} groupName='Соусы' type='sauce' />
-              <IngredientsGroup ingredients={ingredients.main} showIngredientDetails={showIngredientDetails} groupName='Начинки' type='main' />
-            </div>
+            {Object.keys(ingredients).length && (
+              <div className={styles.ingredients_container}>
+                <IngredientsGroup ingredients={ingredients.bun} showIngredientDetails={showIngredientDetails} groupName='Булки' type='bun' />
+                <IngredientsGroup ingredients={ingredients.sauce} showIngredientDetails={showIngredientDetails} groupName='Соусы' type='sauce' />
+                <IngredientsGroup ingredients={ingredients.main} showIngredientDetails={showIngredientDetails} groupName='Начинки' type='main' />
+              </div>
+            )}
           </>
         )}
       </section>
