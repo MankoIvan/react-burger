@@ -10,7 +10,7 @@ import { switchIngredients } from '../../services/actions/burger-constructor'
 
 const BurgerConstructorElement = ({ ingredient, onRemove, position, index }) => {
   const draggable = ingredient.type !== 'bun'
-  
+
   const dispatch = useDispatch()
 
   const handleRemoveIngredient = () => {
@@ -21,7 +21,7 @@ const BurgerConstructorElement = ({ ingredient, onRemove, position, index }) => 
     dispatch(switchIngredients(dragIndex, index))
   }
 
-  const [, dragRef] = useDrag({
+  const [{ isDrag }, dragRef] = useDrag({
     type: 'switchIngredient',
     item: { dragIndex: index },
     collect: monitor => ({
@@ -41,7 +41,9 @@ const BurgerConstructorElement = ({ ingredient, onRemove, position, index }) => 
 
   return (
     <div className={styles.ingredient_wrapper} ref={dropTarget}>
-      <div className={`${styles.ingredient} ${draggable ? styles.draggable : ''} ${isHover ? styles.hovered : ''}`} ref={draggable ? dragRef : undefined}>
+      <div
+        className={`${styles.ingredient} ${draggable ? styles.draggable : ''} ${isDrag ? styles.dragged : ''} ${isHover ? styles.hovered : ''} `}
+        ref={draggable ? dragRef : undefined}>
         {draggable && (
           <DragIcon type="primary" />
         )}
@@ -54,7 +56,7 @@ const BurgerConstructorElement = ({ ingredient, onRemove, position, index }) => 
           isLocked={!draggable}
         />
       </div>
-      {isHover && (
+      {isHover && !isDrag && (
         <div className={styles.placeholder}>
           <BurgerConstructorPlaceholder>
             Меняемся местами
