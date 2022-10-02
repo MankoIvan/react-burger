@@ -16,12 +16,14 @@ const BurgerConstructor = () => {
     filling,
     orderData,
     loading,
+    error,
     showDetails
   } = useSelector(store => ({
     bun: store.burgerConstructor.bun,
     filling: store.burgerConstructor.filling,
     orderData: store.order.order,
     loading: store.order.orderRequest,
+    error: store.order.orderFailed,
     showDetails: store.order.showDetails
   }));
   const dispatch = useDispatch()
@@ -115,15 +117,15 @@ const BurgerConstructor = () => {
             </p>
             <CurrencyIcon />
           </div>
-          <Button type="primary" size="large" onClick={handleMakeOrder}>
+          <Button type="primary" size="large" onClick={handleMakeOrder} disabled={!(bun || filling.length)}>
             Оформить заказ
           </Button>
         </div>
       </section>
       {showDetails && (
         <Modal onClose={handleOnClose}>
-          {loading ? (
-            <Loader />
+          {loading || error ? (
+            <Loader text={loading ? 'Загружаемся...' : 'Произошла ошибка загрузки'} />
           ) : (
             <OrderDetails {...orderData} />
           )}

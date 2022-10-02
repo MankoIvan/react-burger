@@ -33,11 +33,13 @@ const BurgerIngredients = () => {
   const {
     ingredients,
     loading,
+    error,
     showDetails,
     currentIngredient
   } = useSelector(store => ({
     ingredients: store.ingredients.items,
     loading: store.ingredients.itemsRequest,
+    error: store.ingredients.itemsFailed,
     showDetails: store.ingredientDetails.showDetails,
     currentIngredient: store.ingredientDetails.ingredient
   }));
@@ -77,8 +79,8 @@ const BurgerIngredients = () => {
         <h1 className="text text_type_main-large">
           Соберите бургер
         </h1>
-        {loading ? (
-          <Loader />
+        {loading || error ? (
+          <Loader text={loading ? 'Загружаемся...' : 'Произошла ошибка загрузки'} />
         ) : (
           <>
             <div className={styles.tabs} ref={tabsRef}>

@@ -21,7 +21,7 @@ export const makeOrderRequest = (ingredients) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      ingredients: ingredients
+      ingredients: ingredients.map(item => item._id).filter(item => !!item)
     })
   })
     .then(checkReponse)
