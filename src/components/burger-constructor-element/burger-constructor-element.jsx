@@ -40,7 +40,7 @@ const BurgerConstructorElement = ({ ingredient, onRemove, position, index }) => 
   })
 
   return (
-    <div className={styles.ingredient_wrapper} ref={dropTarget}>
+    <div className={styles.ingredient_wrapper} ref={draggable ? dropTarget : undefined}>
       <div
         className={`${styles.ingredient} ${draggable ? styles.draggable : ''} ${isDrag ? styles.dragged : ''} ${isHover ? styles.hovered : ''} `}
         ref={draggable ? dragRef : undefined}>
