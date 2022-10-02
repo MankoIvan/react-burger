@@ -71,9 +71,9 @@ const BurgerConstructor = () => {
           )}
           {!!filling.length ? (
             <div className={styles.filling_list}>
-              {filling.map((item, index) => {
+              {filling.map((item) => {
                 return (
-                  <div className={styles.ingredient} key={index}>
+                  <div className={styles.ingredient} key={item._uuid}>
                     <DragIcon type="primary" />
                     <ConstructorElement
                       text={item.name}
@@ -117,7 +117,7 @@ const BurgerConstructor = () => {
             </p>
             <CurrencyIcon />
           </div>
-          <Button type="primary" size="large" onClick={handleMakeOrder} disabled={!(bun || filling.length)}>
+          <Button type="primary" size="large" onClick={handleMakeOrder} disabled={!Object.keys(bun).length || !filling.length}>
             Оформить заказ
           </Button>
         </div>
