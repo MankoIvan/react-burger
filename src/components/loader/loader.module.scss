@@ -8,6 +8,7 @@
   justify-content: center;
   flex-direction: column;
   gap: 20px;
+  text-align: center;
 }
 
 .outer_orbit {
@@ -39,7 +40,6 @@
   padding: 10px;
   top: -20px;
   left: calc(50% - 20px);
-  background-color: $BLACK;
   border-radius: 50%;
   animation: planet 6s infinite linear;
 

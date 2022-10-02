@@ -1,36 +1,76 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import React, { useEffect, useState } from 'react'
-import { getIngredientsData } from '../../utils/burger-api'
-import IngredientCard from '../ingredient-card/ingredient-card'
+import React, { useEffect, useState, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { showIngredientDetails, toggleModal } from '../../services/actions/ingredient-details'
+import { getIngredients } from '../../services/actions/ingredients'
 import IngredientDetails from '../ingredient-details/ingredient-details'
+import IngredientsGroup from '../ingredients-group/ingredients-group'
 import Loader from '../loader/loader'
 import Modal from '../modal/modal'
 import styles from './burger-ingredients.module.scss'
 
 const BurgerIngredients = () => {
-
-  const [ingredients, setIngredients] = useState({});
-  const [showModal, setShowModal] = useState(false);
-  const [modalIngredient, setModalIngredient] = useState({});
   const [currentTab, setCurrentTab] = useState('bun');
-  const [loading, setLoading] = useState(false)
+  const tabsRef = useRef();
+  const bunRef = useRef();
+  const sauceRef = useRef();
+  const mainRef = useRef();
+  const refs = [
+    {
+      tab: 'bun',
+      ref: bunRef
+    },
+    {
+      tab: 'sauce',
+      ref: sauceRef
+    },
+    {
+      tab: 'main',
+      ref: mainRef
+    }
+  ]
+
+  const {
+    ingredients,
+    loading,
+    error,
+    showDetails,
+    currentIngredient
+  } = useSelector(store => ({
+    ingredients: store.ingredients.items,
+    loading: store.ingredients.itemsRequest,
+    error: store.ingredients.itemsFailed,
+    showDetails: store.ingredientDetails.showDetails,
+    currentIngredient: store.ingredientDetails.ingredient
+  }));
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    setLoading(true)
-    getIngredientsData().then(data => {
-      setIngredients(data)
-      setLoading(false)
-    })
-      .catch(() => alert('Что-то пошло не так на этапе сортировки ингридиентов. Пожалуйста перезагрузите страницу.'))
-  }, [])
+    dispatch(getIngredients())
+  }, [dispatch])
 
-  const toggleModal = () => {
-    setShowModal(prev => !prev);
+  const handleOnClose = () => {
+    dispatch(toggleModal())
   }
 
-  const showIngredientDetails = (ingredient) => {
-    setModalIngredient(ingredient);
-    toggleModal();
+  const handleShowDetails = (ingredient) => {
+    dispatch(showIngredientDetails(ingredient))
+  }
+
+  const handleScroll = (e) => {
+    const tabsTop = tabsRef.current.getBoundingClientRect().y
+    const offsets = refs.map(item => {
+      const top = item.ref.current.getBoundingClientRect().y
+      return {
+        ...item,
+        offset: Math.abs(tabsTop - top)
+      }
+    }).sort((a, b) => a.offset - b.offset);
+    setCurrentTab(offsets[0].tab)
+  }
+
+  const handleTabClick = (tab) => {
+    refs.find(item => item.tab === tab).ref.current.scrollIntoView()
   }
 
   return (
@@ -39,66 +79,51 @@ const BurgerIngredients = () => {
         <h1 className="text text_type_main-large">
           Соберите бургер
         </h1>
-        {loading ? (
-          <Loader />
+        {loading || error ? (
+          <Loader text={loading ? 'Загружаемся...' : 'Произошла ошибка загрузки'} />
         ) : (
           <>
-            <div className={styles.tabs}>
-              <Tab value="bun" active={currentTab === 'bun'} onClick={setCurrentTab}>
+            <div className={styles.tabs} ref={tabsRef}>
+              <Tab value="bun" active={currentTab === 'bun'} onClick={() => handleTabClick('bun')}>
                 Булки
               </Tab>
-              <Tab value="sauce" active={currentTab === 'sauce'} onClick={setCurrentTab}>
+              <Tab value="sauce" active={currentTab === 'sauce'} onClick={() => handleTabClick('sauce')}>
                 Соусы
               </Tab>
-              <Tab value="main" active={currentTab === 'main'} onClick={setCurrentTab}>
+              <Tab value="main" active={currentTab === 'main'} onClick={() => handleTabClick('main')}>
                 Начинки
               </Tab>
             </div>
 
-            <div className={styles.ingredients_container}>
-              {ingredients.bun && (
-                <>
-                  <h3 className="text text_type_main-medium" id='bun'>
-                    Булки
-                  </h3>
-                  <div className={styles.ingredient_block}>
-                    {ingredients.bun.map((item) =>
-                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
-                    )}
-                  </div>
-                </>
-              )}
-              {ingredients.sauce && (
-                <>
-                  <h3 className="text text_type_main-medium" id='main'>
-                    Соусы
-                  </h3>
-                  <div className={styles.ingredient_block}>
-                    {ingredients.sauce.map((item) =>
-                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
-                    )}
-                  </div>
-                </>
-              )}
-              {ingredients.main && (
-                <>
-                  <h3 className="text text_type_main-medium" id='sauce'>
-                    Начинки
-                  </h3>
-                  <div className={styles.ingredient_block}>
-                    {ingredients.main.map((item) =>
-                      <IngredientCard ingredient={item} showIngredientDetails={showIngredientDetails} key={item._id} />
-                    )}
-                  </div>
-                </>
-              )}
-            </div>
+            {Object.keys(ingredients).length ? (
+              <div className={styles.ingredients_container} onScroll={handleScroll}>
+                <IngredientsGroup
+                  ingredients={ingredients.bun}
+                  showIngredientDetails={handleShowDetails}
+                  groupName='Булки'
+                  type='bun'
+                  groupRef={bunRef}
+                />
+                <IngredientsGroup
+                  ingredients={ingredients.sauce}
+                  showIngredientDetails={handleShowDetails}
+                  groupName='Соусы'
+                  type='sauce'
+                  groupRef={sauceRef} />
+                <IngredientsGroup
+                  ingredients={ingredients.main}
+                  showIngredientDetails={handleShowDetails}
+                  groupName='Начинки'
+                  type='main'
+                  groupRef={mainRef} />
+              </div>
+            ) : null}
           </>
         )}
       </section>
-      {showModal && (
-        <Modal onClose={toggleModal} header='Детали ингредиента'>
-          <IngredientDetails ingredient={modalIngredient} />
+      {showDetails && (
+        <Modal onClose={handleOnClose} header='Детали ингредиента'>
+          <IngredientDetails ingredient={currentIngredient} />
         </Modal>
       )}
     </>

@@ -1,8 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './loader.module.scss'
 
-const Loader = () => {
+const Loader = ({text}) => {
   return (
     <div className={styles.loader}>
       <div className={styles.outer_orbit}>
@@ -16,10 +17,14 @@ const Loader = () => {
         </div>
       </div>
       <p className="text text_type_main-large">
-        Загружаемся...
+        {text}
       </p>
     </div>
   )
+}
+
+Loader.propTypes = {
+  text: PropTypes.string.isRequired
 }
 
 export default Loader

@@ -1,7 +1,7 @@
-import { INGREDIENTS_URL } from "../constants/api";
+import { INGREDIENTS_URL, ORDER_URL } from "../constants/api";
 import { checkReponse } from "./checkResponse";
 
-export const getIngredientsData = () => {
+export const getIngredientsRequest = () => {
   return fetch(INGREDIENTS_URL)
     .then(checkReponse)
     .then(({ data }) =>
@@ -11,5 +11,19 @@ export const getIngredientsData = () => {
         return acc
       }, {})
     )
-    .catch(() => alert('Что-то пошло не так на этапе загрузки ингридиентов. Пожалуйста перезагрузите страницу.'))
+    .catch((err) => Promise.reject(err))
+}
+export const makeOrderRequest = (ingredients) => {
+  return fetch(ORDER_URL, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ingredients: ingredients.map(item => item._id).filter(item => !!item)
+    })
+  })
+    .then(checkReponse)
+    .catch((err) => Promise.reject(err))
 }

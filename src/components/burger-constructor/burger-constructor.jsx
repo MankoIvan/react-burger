@@ -1,72 +1,101 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styles from './burger-constructor.module.scss'
-import { mockedBun, mockedFilling } from '../../utils/mockedData'
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-deatils/order-deatils'
+import Loader from '../loader/loader'
+import { makeOrder, toggleModal } from '../../services/actions/order'
+import { addIngredient, removeIngredient } from '../../services/actions/burger-constructor'
+import { useDrop } from 'react-dnd'
+import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element'
+import BurgerConstructorPlaceholder from '../burger-constructor-placeholder/burger-constructor-placeholder'
 
 const BurgerConstructor = () => {
-
-  const [bun, setBun] = useState({})
-  const [filling, setFilling] = useState([])
-  const [showModal, setShowModal] = useState(false)
   const [totatlPrice, setTotatlPrice] = useState(0)
+
+  const {
+    bun,
+    filling,
+    orderData,
+    loading,
+    error,
+    showDetails
+  } = useSelector(store => ({
+    bun: store.burgerConstructor.bun,
+    filling: store.burgerConstructor.filling,
+    orderData: store.order.order,
+    loading: store.order.orderRequest,
+    error: store.order.orderFailed,
+    showDetails: store.order.showDetails
+  }));
+  
+  const dispatch = useDispatch()
 
   const countPrice = (ingredients) => {
     return ingredients.reduce((acc, item) => acc + (item.price || 0), 0)
   }
 
   useEffect(() => {
-    setBun(mockedBun);
-    setFilling(mockedFilling)
-  }, [])
-
-  useEffect(() => {
     setTotatlPrice(countPrice([...filling, bun, bun]) || 0)
   }, [filling, bun])
 
-
-  const toggleModal = () => {
-    setShowModal(prev => !prev)
+  const handleMakeOrder = () => {
+    dispatch(makeOrder([...filling, bun, bun]))
   }
+
+  const handleOnClose = () => {
+    dispatch(toggleModal())
+  }
+
+  const handleRemoveIngredient = (uuid) => {
+    dispatch(removeIngredient(uuid))
+  }
+
+  const onDropHandler = (ingredient) => {
+    dispatch(addIngredient(ingredient))
+  }
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "newIngredient",
+    drop(ingredient) {
+      onDropHandler(ingredient);
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  })
 
   return (
     <>
       <section className={styles.wrapper}>
-        <div className={styles.ingredients_list}>
-          {bun && (
-            <ConstructorElement
-              type='top'
-              isLocked
-              text={bun.name}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
+        <div className={styles.ingredients} ref={dropTarget}>
+          {!!Object.keys(bun).length ? (
+            <BurgerConstructorElement ingredient={bun} onRemove={handleRemoveIngredient} position='top' />
+          ) : (
+            <BurgerConstructorPlaceholder isHovered={isHover}>
+              Перетащите сюда булочку
+            </BurgerConstructorPlaceholder>
           )}
-          {filling && (
+          {!!filling.length ? (
             <div className={styles.filling_list}>
               {filling.map((item, index) => {
                 return (
-                  <div className={styles.filling_item} key={index}>
-                    <DragIcon type='primary' />
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image_mobile}
-                    />
-                  </div>
+                  <BurgerConstructorElement ingredient={item} onRemove={handleRemoveIngredient} index={index} key={item._uuid} />
                 )
               })}
             </div>
+          ) : (
+            <BurgerConstructorPlaceholder isHovered={isHover}>
+              Перетащите сюда начинку
+            </BurgerConstructorPlaceholder>
           )}
-          {bun && (
-            <ConstructorElement
-              type='bottom'
-              isLocked
-              text={bun.name}
-              price={bun.price}
-              thumbnail={bun.image_mobile}
-            />
+          {!!Object.keys(bun).length ? (
+            <BurgerConstructorElement ingredient={bun} onRemove={handleRemoveIngredient} position='bottom' />
+          ) : (
+            <BurgerConstructorPlaceholder isHovered={isHover}>
+              Перетащите сюда булочку
+            </BurgerConstructorPlaceholder>
           )}
         </div>
         <div className={styles.cta_block}>
@@ -76,14 +105,18 @@ const BurgerConstructor = () => {
             </p>
             <CurrencyIcon />
           </div>
-          <Button type="primary" size="large" onClick={toggleModal}>
+          <Button type="primary" size="large" onClick={handleMakeOrder} disabled={!Object.keys(bun).length || !filling.length}>
             Оформить заказ
           </Button>
         </div>
       </section>
-      {showModal && (
-        <Modal onClose={toggleModal}>
-          <OrderDetails />
+      {showDetails && (
+        <Modal onClose={handleOnClose}>
+          {loading || error ? (
+            <Loader text={loading ? 'Загружаемся...' : 'Произошла ошибка загрузки'} />
+          ) : (
+            <OrderDetails {...orderData} />
+          )}
         </Modal>
       )}
     </>

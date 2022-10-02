@@ -1,3 +1,5 @@
+@import '../../constants/colors.scss';
+
 .ingredient {
   width: 272px;
   display: flex;
@@ -6,6 +8,8 @@
   gap: 4px;
   position: relative;
   cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.25s ease;
 
   &_img {
     height: 120px;
@@ -16,5 +20,9 @@
   &_price {
     display: flex;
     gap: 8px
+  }
+
+  &.dragged {
+    box-shadow: inset 0 0 10px $GREYISH_PURPLE;
   }
 }

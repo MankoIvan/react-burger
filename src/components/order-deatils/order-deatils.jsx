@@ -1,16 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import doneImage from '../../images/done.png'
 import styles from './order-deatils.module.scss'
 
-const OrderDetails = () => {
+const OrderDetails = ({ number = 0 }) => {
 
-  const getRandomNum = () => {
-    return Math.floor(Math.random() * 900000) + 100000
-  }
+  const orderNumber = number.toString().padStart(6, '0')
 
   return (
     <div className={styles.details}>
-      <p className={`text text_type_digits-large ${styles.id}`}>{getRandomNum()}</p>
+      <p className={`text text_type_digits-large ${styles.id}`}>{orderNumber}</p>
       <p className="text text_type_main-medium">
         идентификатор заказа
       </p>
@@ -25,6 +24,10 @@ const OrderDetails = () => {
       </div>
     </div>
   )
+}
+
+OrderDetails.propTypes = {
+  number: PropTypes.number
 }
 
 export default OrderDetails
