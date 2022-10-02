@@ -1,0 +1,25 @@
+.ingredient_wrapper {
+  position: relative;
+}
+.ingredient {
+  padding: 0 16px 0 32px;
+  display: flex;
+  transition: all 0.25s ease;
+
+  &.draggable {
+    padding-left: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  &.hovered {
+    opacity: 0;
+  }
+}
+.placeholder {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  transform: translateY(-50%);
+}

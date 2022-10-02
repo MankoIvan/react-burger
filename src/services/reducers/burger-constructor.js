@@ -1,6 +1,7 @@
 import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
-  REMOVE_INGREDIENT_FROM_CONSTRUCTOR
+  REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+  SWITCH_INGREDIENTS_IN_CONSTRUCTOR
 } from '../actions/burger-constructor'
 
 const initialState = {
@@ -31,6 +32,18 @@ export const burgerConstructorReducer = (state = initialState, action) => {
         ...state,
         filling: state.filling.filter(ingredient => ingredient._uuid !== action.uuid)
       }
+    }
+    case SWITCH_INGREDIENTS_IN_CONSTRUCTOR: {
+      if (action.id_1 !== action.id_2) {
+        const newFilling = [...state.filling]
+        newFilling[action.id_1] = state.filling[action.id_2]
+        newFilling[action.id_2] = state.filling[action.id_1]
+        return {
+          ...state,
+          filling: newFilling
+        }
+      }
+      return state;
     }
 
     default: {

@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import { ingredientPropTypes } from '../../utils/prop-types'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './ingredient-card.module.scss'
-import { useDispatch, useSelector } from 'react-redux'
-import { addIngredient } from '../../services/actions/burger-constructor'
+import { useSelector } from 'react-redux'
+import { useDrag } from 'react-dnd'
 
 
 const IngredientCard = ({ ingredient, showIngredientDetails }) => {
-
   const {
     bun,
     filling
@@ -16,7 +15,7 @@ const IngredientCard = ({ ingredient, showIngredientDetails }) => {
     bun: store.burgerConstructor.bun,
     filling: store.burgerConstructor.filling,
   }));
-  
+
   const ingredients = [...filling, bun, bun];
 
   const count = ingredients.reduce((acc, item) => {
@@ -27,11 +26,16 @@ const IngredientCard = ({ ingredient, showIngredientDetails }) => {
     showIngredientDetails(ingredient)
   }
 
-  const dispatch = useDispatch()
+  const [{ isDrag }, dragRef] = useDrag({
+    type: 'newIngredient',
+    item: { ...ingredient },
+    collect: monitor => ({
+      isDrag: monitor.isDragging()
+    })
+  })
 
   return (
-    <div className={styles.ingredient} onClick={onClick}>
-      <button style={{ position: 'absolute', left: '0' }} onClick={() => dispatch(addIngredient(ingredient))}>add</button>
+    <div className={`${styles.ingredient} ${!!isDrag ? styles.dragged : ''}`} onClick={onClick} ref={dragRef}>
       <img src={ingredient.image} alt={ingredient.name} className={styles.ingredient_img} />
       <div className={styles.ingredient_price}>
         <p className="text text_type_digits-default">{ingredient.price}</p>
@@ -40,7 +44,7 @@ const IngredientCard = ({ ingredient, showIngredientDetails }) => {
       <p className="text text_type_main-default">
         {ingredient.name}
       </p>
-      {count && (
+      {!!count && (
         <Counter count={count} />
       )}
     </div>

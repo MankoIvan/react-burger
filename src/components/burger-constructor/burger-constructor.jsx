@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styles from './burger-constructor.module.scss'
-import { ConstructorElement, CurrencyIcon, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../modal/modal'
 import OrderDetails from '../order-deatils/order-deatils'
 import Loader from '../loader/loader'
 import { makeOrder, toggleModal } from '../../services/actions/order'
-import { removeIngredient } from '../../services/actions/burger-constructor'
+import { addIngredient, removeIngredient } from '../../services/actions/burger-constructor'
+import { useDrop } from 'react-dnd'
+import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element'
+import BurgerConstructorPlaceholder from '../burger-constructor-placeholder/burger-constructor-placeholder'
 
 const BurgerConstructor = () => {
   const [totatlPrice, setTotatlPrice] = useState(0)
@@ -26,6 +29,7 @@ const BurgerConstructor = () => {
     error: store.order.orderFailed,
     showDetails: store.order.showDetails
   }));
+  
   const dispatch = useDispatch()
 
   const countPrice = (ingredients) => {
@@ -48,66 +52,50 @@ const BurgerConstructor = () => {
     dispatch(removeIngredient(uuid))
   }
 
+  const onDropHandler = (ingredient) => {
+    dispatch(addIngredient(ingredient))
+  }
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "newIngredient",
+    drop(ingredient) {
+      onDropHandler(ingredient);
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  })
+
   return (
     <>
       <section className={styles.wrapper}>
-        <div className={styles.ingredients}>
+        <div className={styles.ingredients} ref={dropTarget}>
           {!!Object.keys(bun).length ? (
-            <div className={styles.ingredient}>
-              <ConstructorElement
-                type='top'
-                isLocked
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image_mobile}
-              />
-            </div>
+            <BurgerConstructorElement ingredient={bun} onRemove={handleRemoveIngredient} position='top' />
           ) : (
-            <div className={styles.ingredient_placeholder}>
-              <p className="text text_type_main-default">
-                Перетащите сюда булочку
-              </p>
-            </div>
+            <BurgerConstructorPlaceholder isHovered={isHover}>
+              Перетащите сюда булочку
+            </BurgerConstructorPlaceholder>
           )}
           {!!filling.length ? (
             <div className={styles.filling_list}>
-              {filling.map((item) => {
+              {filling.map((item, index) => {
                 return (
-                  <div className={styles.ingredient} key={item._uuid}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={item.name}
-                      price={item.price}
-                      thumbnail={item.image_mobile}
-                      handleClose={() => handleRemoveIngredient(item._uuid)}
-                    />
-                  </div>
+                  <BurgerConstructorElement ingredient={item} onRemove={handleRemoveIngredient} index={index} key={item._uuid} />
                 )
               })}
             </div>
           ) : (
-            <div className={styles.ingredient_placeholder}>
-              <p className="text text_type_main-default">
-                Перетащите сюда начинку
-              </p>
-            </div>
+            <BurgerConstructorPlaceholder isHovered={isHover}>
+              Перетащите сюда начинку
+            </BurgerConstructorPlaceholder>
           )}
           {!!Object.keys(bun).length ? (
-            <div className={styles.ingredient}>
-              <ConstructorElement
-                type='bottom'
-                isLocked
-                text={bun.name}
-                price={bun.price}
-                thumbnail={bun.image_mobile}
-              />
-            </div>
+            <BurgerConstructorElement ingredient={bun} onRemove={handleRemoveIngredient} position='bottom' />
           ) : (
-            <div className={styles.ingredient_placeholder}>
-              <p className="text text_type_main-default">
-                Перетащите сюда булочку
-              </p>
-            </div>
+            <BurgerConstructorPlaceholder isHovered={isHover}>
+              Перетащите сюда булочку
+            </BurgerConstructorPlaceholder>
           )}
         </div>
         <div className={styles.cta_block}>
