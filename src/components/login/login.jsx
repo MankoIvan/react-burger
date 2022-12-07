@@ -11,7 +11,8 @@ const Login = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(loginUser(values));
   }
 
@@ -25,7 +26,7 @@ const Login = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">
           Вход
         </p>
@@ -39,7 +40,7 @@ const Login = () => {
           value={values.password}
           name={'password'}
         />
-        <Button disabled={!values.password || !values.email} onClick={onSubmit} htmlType='button'>
+        <Button disabled={!values.password || !values.email} htmlType='submit' type='primary'>
           Войти
         </Button>
       </form>

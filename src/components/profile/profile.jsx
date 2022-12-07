@@ -1,10 +1,10 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useForm } from '../../hooks/use-form'
 import styles from './profile.module.scss'
 import { NavLink } from 'react-router-dom'
-import { logoutUser } from '../../services/actions/auth'
+import { logoutUser, updateUser } from '../../services/actions/auth'
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -12,10 +12,21 @@ const Profile = () => {
   const onLogOut = () => {
     dispatch(logoutUser())
   }
-  
+
   const user = useSelector(store => store.auth.user);
 
-  const [values, handleValues] = useForm({ name: user.name, email: user.email, password: '' })
+  const [values, handleValues, setValues] = useForm({ name: user.name, email: user.email })
+
+  const handleCancel = () => {
+    setValues(user)
+  }
+
+  const handleSave = (e) => {
+    e.preventDefault();
+    dispatch(updateUser(values))
+  }
+
+  const CtaVisible = (values.name !== user.name) || (values.email !== user.email)
 
   return (
     <div className={styles.wrapper}>
@@ -41,7 +52,7 @@ const Profile = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </div>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleSave}>
         <Input
           type={"text"}
           placeholder={"Имя"}
@@ -64,7 +75,7 @@ const Profile = () => {
           errorText={"Ошибка"}
           size={"default"}
         />
-        <Input
+        {/* <Input
           type={"password"}
           placeholder={"Пароль"}
           onChange={handleValues}
@@ -74,7 +85,15 @@ const Profile = () => {
           error={false}
           errorText={"Ошибка"}
           size={"default"}
-        />
+        /> */}
+        <div className={`${styles.cta_block} ${CtaVisible ? styles.cta_block__visible : ''}`}>
+          <Button type="secondary" size="medium" onClick={handleCancel} htmlType='button'>
+            Отмена
+          </Button>
+          <Button type="primary" size="medium" htmlType='submit'>
+            Сохранить
+          </Button>
+        </div>
       </form>
     </div>
   )

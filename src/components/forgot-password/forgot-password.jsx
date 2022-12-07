@@ -11,7 +11,8 @@ const ForgotPassword = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(forgotPassword(values))
   }
 
@@ -23,7 +24,7 @@ const ForgotPassword = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">
           Восстановление пароля
         </p>
@@ -37,7 +38,7 @@ const ForgotPassword = () => {
           errorText={'Ошибка ввода e-mail'}
           size={'default'}
         />
-        <Button disabled={!values.email} onClick={onSubmit} htmlType='button'>
+        <Button disabled={!values.email} htmlType='submit'>
           Восстановить
         </Button>
       </form>

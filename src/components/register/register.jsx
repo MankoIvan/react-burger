@@ -11,7 +11,8 @@ const Register = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(registerUser(values));
   }
 
@@ -49,7 +50,7 @@ const Register = () => {
           value={values.password}
           name={'password'}
         />
-        <Button disabled={!values.password || !values.email || !values.name} onClick={onSubmit} htmlType='button'>
+        <Button disabled={!values.password || !values.email || !values.name} htmlType='submit'>
           Зарегистрироваться
         </Button>
       </form>

@@ -12,5 +12,5 @@ export const useForm = (defaultValues) => {
       }
     })
   }
-  return [values, handleValues]
+  return [values, handleValues, setValues]
 }

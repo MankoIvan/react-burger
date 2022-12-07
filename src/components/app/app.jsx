@@ -13,6 +13,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 import Modal from '../modal/modal';
 import Loader from '../loader/loader';
 import Ingredient from '../../pages/ingredient/ingredient';
+import NotFound from '../../pages/not-found/not-found';
 
 function App() {
   const location = useLocation();
@@ -79,7 +80,7 @@ function App() {
             )}
           </Route>
           <Route>
-            404
+            <NotFound />
           </Route>
         </Switch>
         {background && (

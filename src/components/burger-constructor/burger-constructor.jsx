@@ -10,9 +10,13 @@ import { addIngredient, removeIngredient } from '../../services/actions/burger-c
 import { useDrop } from 'react-dnd'
 import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element'
 import BurgerConstructorPlaceholder from '../burger-constructor-placeholder/burger-constructor-placeholder'
+import { useHistory, useLocation } from 'react-router-dom'
 
 const BurgerConstructor = () => {
   const [totatlPrice, setTotatlPrice] = useState(0)
+
+  const history = useHistory()
+  const location = useLocation();
 
   const {
     bun,
@@ -20,16 +24,18 @@ const BurgerConstructor = () => {
     orderData,
     loading,
     error,
-    showDetails
+    showDetails,
+    user
   } = useSelector(store => ({
     bun: store.burgerConstructor.bun,
     filling: store.burgerConstructor.filling,
     orderData: store.order.order,
     loading: store.order.orderRequest,
     error: store.order.orderFailed,
-    showDetails: store.order.showDetails
+    showDetails: store.order.showDetails,
+    user: store.auth.user
   }));
-  
+
   const dispatch = useDispatch()
 
   const countPrice = (ingredients) => {
@@ -41,7 +47,13 @@ const BurgerConstructor = () => {
   }, [filling, bun])
 
   const handleMakeOrder = () => {
-    dispatch(makeOrder([...filling, bun, bun]))
+    if (!user) {
+      return (
+        history.push({ pathname: "/login", state: { from: location } })
+      )
+    } else {
+      dispatch(makeOrder([...filling, bun, bun]))
+    }
   }
 
   const handleOnClose = () => {

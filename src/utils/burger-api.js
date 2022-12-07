@@ -110,7 +110,7 @@ export function getUserRequest() {
     .catch((err) => Promise.reject(err))
 }
 
-export function updateUserRequest({ email, password, name }) {
+export function updateUserRequest({ email, name }) {
   return fetch(USER_URL, {
     method: "PATCH",
     headers: {
@@ -119,7 +119,6 @@ export function updateUserRequest({ email, password, name }) {
     },
     body: JSON.stringify({
       email: email,
-      password: password,
       name: name
     })
   })

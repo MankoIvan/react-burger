@@ -11,7 +11,8 @@ const ResetPassword = () => {
 
   const dispatch = useDispatch();
 
-  const onSubmit = () => {
+  const onSubmit = (e) => {
+    e.preventDefault();
     dispatch(resetPassword(values))
   }
 
@@ -23,7 +24,7 @@ const ResetPassword = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmit}>
         <p className="text text_type_main-medium">
           Восстановление пароля
         </p>
@@ -43,7 +44,7 @@ const ResetPassword = () => {
           errorText={'Ошибка ввода кода'}
           size={'default'}
         />
-        <Button disabled={!values.password || !values.token} onClick={onSubmit} htmlType='button'>
+        <Button disabled={!values.password || !values.token} htmlType='submit'>
           Сохранить
         </Button>
       </form>

@@ -5,7 +5,7 @@ import { Redirect, Route, useLocation } from 'react-router-dom';
 
 const ProtectedRoute = ({ authRequired = false, children, ...rest }) => {
   const user = useSelector(store => store.auth.user);
-  const location = useLocation()
+  const location = useLocation();
 
   if (user && !authRequired) {
     const from = location.state?.from || { pathname: "/" };
