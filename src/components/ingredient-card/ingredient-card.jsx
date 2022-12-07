@@ -1,13 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { ingredientPropTypes } from '../../utils/prop-types'
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './ingredient-card.module.scss'
 import { useSelector } from 'react-redux'
 import { useDrag } from 'react-dnd'
+import { Link, useLocation } from 'react-router-dom'
 
 
-const IngredientCard = ({ ingredient, showIngredientDetails }) => {
+const IngredientCard = ({ ingredient }) => {
+  const location = useLocation();
   const {
     bun,
     filling
@@ -22,10 +23,6 @@ const IngredientCard = ({ ingredient, showIngredientDetails }) => {
     return acc += ingredient._id === item._id ? 1 : 0
   }, 0)
 
-  const onClick = () => {
-    showIngredientDetails(ingredient)
-  }
-
   const [{ isDrag }, dragRef] = useDrag({
     type: 'newIngredient',
     item: { ...ingredient },
@@ -35,7 +32,16 @@ const IngredientCard = ({ ingredient, showIngredientDetails }) => {
   })
 
   return (
-    <div className={`${styles.ingredient} ${!!isDrag ? styles.dragged : ''}`} onClick={onClick} ref={dragRef}>
+    <Link
+      key={ingredient._id}
+      to={{
+        pathname: `/ingredients/${ingredient._id}`,
+        state: { background: location }
+      }}
+      className={`${styles.ingredient} 
+      ${!!isDrag ? styles.dragged : ''}`}
+      ref={dragRef}
+    >
       <img src={ingredient.image} alt={ingredient.name} className={styles.ingredient_img} />
       <div className={styles.ingredient_price}>
         <p className="text text_type_digits-default">{ingredient.price}</p>
@@ -47,13 +53,12 @@ const IngredientCard = ({ ingredient, showIngredientDetails }) => {
       {!!count && (
         <Counter count={count} />
       )}
-    </div>
+    </Link>
   )
 }
 
 IngredientCard.propTypes = {
   ingredient: ingredientPropTypes.isRequired,
-  showIngredientDetails: PropTypes.func.isRequired
 }
 
 export default IngredientCard

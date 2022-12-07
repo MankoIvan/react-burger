@@ -4,10 +4,12 @@ import { ingredientsReducer } from './ingredients';
 import { orderReducer } from './order';
 import { ingredientDetailsReducer } from './ingredient-details';
 import { burgerConstructorReducer } from './burger-constructor';
+import { authReducer } from './auth';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   order: orderReducer,
   ingredientDetails: ingredientDetailsReducer,
-  burgerConstructor: burgerConstructorReducer
+  burgerConstructor: burgerConstructorReducer,
+  auth: authReducer
 });

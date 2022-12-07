@@ -2401,7 +2401,7 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
-"@ya.praktikum/react-developer-burger-ui-components@^1.13.1":
+"@ya.praktikum/react-developer-burger-ui-components@^1.13.5":
   version "1.13.5"
   resolved "https://registry.yarnpkg.com/@ya.praktikum/react-developer-burger-ui-components/-/react-developer-burger-ui-components-1.13.5.tgz#fe3769cf661a1c31e46945df003e67b43059fba3"
   integrity sha512-ZnBKNdvuhECdjQMlYb/jCdWNJkeYxhDyUWIXNG47yes/pp/hxNgB8ErJtSy6jU7qh6DbW1qXOPaEie03K9xQ5A==

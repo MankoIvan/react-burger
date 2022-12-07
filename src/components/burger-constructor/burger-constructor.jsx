@@ -105,7 +105,7 @@ const BurgerConstructor = () => {
             </p>
             <CurrencyIcon />
           </div>
-          <Button type="primary" size="large" onClick={handleMakeOrder} disabled={!Object.keys(bun).length || !filling.length}>
+          <Button type="primary" size="large" onClick={handleMakeOrder} disabled={!Object.keys(bun).length || !filling.length} htmlType='button'>
             Оформить заказ
           </Button>
         </div>

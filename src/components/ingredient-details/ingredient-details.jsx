@@ -1,10 +1,18 @@
 import React from 'react'
-import { ingredientPropTypes } from '../../utils/prop-types'
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import Loader from '../loader/loader';
 import styles from './ingredient-details.module.scss'
 
-const IngredientDetails = ({ ingredient }) => {
+const IngredientDetails = () => {
+
+  const { id } = useParams()
+
+  const ingredients = useSelector(store => store.ingredients.items);
+  const ingredient = ingredients.find(item => item._id === id)
+
   return (
-    <div className={styles.wrapper}>
+    ingredient ? (<div className={styles.wrapper}>
       <div className={styles.details}>
         <img src={ingredient.image_large} alt={ingredient.name} className={styles.img} />
         <p className="text text_type_main-medium pt-4 pb-8">
@@ -37,12 +45,10 @@ const IngredientDetails = ({ ingredient }) => {
           </div>
         </div>
       </div>
-    </div>
+    </div>) : (
+      <Loader text='Такого ингредиента не существует :(' />
+    )
   )
-}
-
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropTypes.isRequired
 }
 
 export default IngredientDetails

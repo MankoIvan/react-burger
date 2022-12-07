@@ -1,8 +1,12 @@
 import React from 'react'
+import ResetPasswordComponent from '../../components/reset-password/reset-password'
+import styles from './reset-password.module.scss'
 
 const ResetPassword = () => {
   return (
-    <div>ResetPassword</div>
+    <div className={styles.wrapper}>
+      <ResetPasswordComponent />
+    </div>
   )
 }
 
