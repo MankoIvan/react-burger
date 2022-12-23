@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import PropTypes from 'prop-types'
 import { ingredientPropTypes } from '../../utils/prop-types'
@@ -49,7 +49,7 @@ const BurgerConstructorElement = ({ ingredient, onRemove, position, index }) => 
         )}
         <ConstructorElement
           type={position}
-          text={ingredient.name}
+          text={`${ingredient.name}${position && position === 'top' ? ' (верх)' : ' (низ)'}`}
           price={ingredient.price}
           thumbnail={ingredient.image_mobile}
           handleClose={handleRemoveIngredient}
