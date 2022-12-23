@@ -1,0 +1,86 @@
+@import '../../constants/colors.scss';
+
+.wrapper {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 1240px;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.nav_wrapper {
+  color: $GREYISH_PURPLE;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.navigation {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+}
+
+
+.nav_link {
+  padding: 17px 0;
+  color: $GREYISH_PURPLE;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+
+  svg {
+    transition: all 0.25s ease;
+    fill: $GREYISH_PURPLE;
+  }
+
+  &:hover {
+    color: $WHITE;
+  }
+
+  &__active {
+    color: $WHITE;
+  }
+}
+
+.button {
+  background-color: transparent;
+  border: none;
+  margin: unset;
+  padding: 17px 0;
+  text-align: start;
+  width: fit-content;
+  color: $GREYISH_PURPLE;
+  transition: all 0.25s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: $WHITE;
+  }
+}
+
+.cta_block {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 24px;
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s ease;
+
+  &__visible {
+    opacity: 1;
+    pointer-events: unset;
+  }
+}
