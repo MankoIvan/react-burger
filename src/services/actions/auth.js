@@ -1,4 +1,4 @@
-import { forgotPasswordRequest, getUserRequest, loginUserRequest, logoutUserRequest, registerUserRequest, resetPasswordRequest, updateTokenRequest, updateUserRequest } from "../../utils/burger-api";
+import { forgotPasswordRequest, getUserRequest, loginUserRequest, logoutUserRequest, registerUserRequest, resetPasswordRequest, updateTokenRequest, updateUserRequest } from "../../utils/api/burger-api";
 import { deleteCookie, setCookie } from "../../utils/cookie";
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';

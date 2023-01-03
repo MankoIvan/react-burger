@@ -1,4 +1,4 @@
-import { makeOrderRequest } from "../../utils/burger-api";
+import { makeOrderRequest } from "../../utils/api/burger-api";
 export const MAKE_ORDER_REQUEST = 'MAKE_ORDER_REQUEST';
 export const MAKE_ORDER_SUCCESS = 'MAKE_ORDER_SUCCESS';
 export const MAKE_ORDER_FAILED = 'MAKE_ORDER_FAILED';
