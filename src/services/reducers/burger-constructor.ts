@@ -1,15 +1,17 @@
+import { TBurgerConstructorStore } from '../../types/generalTypes';
+import { TBurgerConstructorActions } from '../actions/burger-constructor';
 import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   SWITCH_INGREDIENTS_IN_CONSTRUCTOR
-} from '../actions/burger-constructor'
+} from '../constants/burger-constructor'
 
-const initialState = {
-  bun: {},
+const initialState: TBurgerConstructorStore = {
+  bun: undefined,
   filling: []
 };
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (state = initialState, action: TBurgerConstructorActions) => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_CONSTRUCTOR: {
       if (action.ingredient.type === 'bun') {

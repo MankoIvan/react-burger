@@ -1,3 +1,5 @@
+import { TAuthStore } from "../../types/generalTypes";
+import { TAuthActions } from "../actions/auth";
 import {
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -23,10 +25,10 @@ import {
   UPDATE_TOKEN_REQUEST,
   UPDATE_TOKEN_SUCCESS,
   UPDATE_TOKEN_FAILED
-} from "../actions/auth";
+} from "../constants/auth";
 
-const initialState = {
-  user: null,
+const initialState: TAuthStore = {
+  user: undefined,
 
   registerRequest: false,
   registerFailed: false,
@@ -54,7 +56,7 @@ const initialState = {
   updateTokenFailed: false,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: TAuthActions) => {
   switch (action.type) {
     case REGISTER_REQUEST: {
       return {

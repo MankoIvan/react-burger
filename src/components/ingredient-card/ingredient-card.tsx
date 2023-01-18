@@ -20,7 +20,7 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   const ingredients = [...filling, bun, bun];
 
   const count = ingredients.reduce((acc, item) => {
-    return (acc += ingredient._id === item._id ? 1 : 0);
+    return (acc += ingredient._id === item?._id ? 1 : 0);
   }, 0);
 
   const [{ isDrag }, dragRef] = useDrag({

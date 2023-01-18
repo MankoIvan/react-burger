@@ -25,7 +25,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({
   };
 
   const onDropHandler = ({ dragIndex }: { dragIndex: number }) => {
-    dispatch(switchIngredients(dragIndex, index));
+    index && dispatch(switchIngredients(dragIndex, index));
   };
 
   const [{ isDrag }, dragRef] = useDrag({

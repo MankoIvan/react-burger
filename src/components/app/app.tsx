@@ -6,6 +6,7 @@ import Layout from "../layout/layout";
 import MainContent from "../main-content/main-content";
 import {
   Constructor,
+  Feed,
   ForgotPassword,
   Login,
   Profile,
@@ -22,6 +23,7 @@ import Loader from "../loader/loader";
 import Ingredient from "../../pages/ingredient/ingredient";
 import NotFound from "../../pages/not-found/not-found";
 import { TLocation, TStore } from "../../types/generalTypes";
+import OrderExplicitDetails from "../order-explicit-details/order-explicit-details";
 
 function App() {
   const location = useLocation<TLocation>();
@@ -79,7 +81,28 @@ function App() {
           <ProtectedRoute path="/reset-password" exact>
             <ResetPassword />
           </ProtectedRoute>
-          <ProtectedRoute path="/profile" exact authRequired>
+          <Route path="/feed" exact>
+            <Feed />
+          </Route>
+          <Route path="/feed/:id" exact>
+            {loading || error ? (
+              <Loader
+                text={loading ? "Загружаемся..." : "Произошла ошибка загрузки"}
+              />
+            ) : (
+              <OrderExplicitDetails />
+            )}
+          </Route>
+          <ProtectedRoute path="/profile/orders/:id" exact authRequired>
+            {loading || error ? (
+              <Loader
+                text={loading ? "Загружаемся..." : "Произошла ошибка загрузки"}
+              />
+            ) : (
+              <OrderExplicitDetails />
+            )}
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile" authRequired>
             <Profile />
           </ProtectedRoute>
           <Route path="/ingredients/:id" exact>

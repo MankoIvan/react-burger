@@ -1,18 +1,20 @@
+import { TOrderStore } from "../../types/generalTypes";
+import { TOrderActions } from "../actions/order";
 import {
   MAKE_ORDER_REQUEST,
   MAKE_ORDER_SUCCESS,
   MAKE_ORDER_FAILED,
   MAKE_ORDER_TOGGLE_MODAL
-} from "../actions/order";
+} from "../constants/order";
 
-const initialState = {
+const initialState: TOrderStore = {
   order: null,
   orderRequest: false,
   orderFailed: false,
   showDetails: false
 };
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
   switch (action.type) {
     case MAKE_ORDER_TOGGLE_MODAL: {
       return {

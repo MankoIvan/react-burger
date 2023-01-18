@@ -38,8 +38,8 @@ const BurgerConstructor: FC = () => {
 
   const dispatch: Dispatch<any> = useDispatch();
 
-  const countPrice = (ingredients: TIngredient[]) => {
-    return ingredients.reduce((acc, item) => acc + (item.price || 0), 0);
+  const countPrice = (ingredients: Array<TIngredient | undefined>) => {
+    return ingredients.reduce((acc, item) => acc + (item?.price || 0), 0);
   };
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const BurgerConstructor: FC = () => {
     if (!user) {
       return history.push({ pathname: "/login", state: { from: location } });
     } else {
-      dispatch(makeOrder([...filling, bun, bun]));
+      bun && dispatch(makeOrder([...filling, bun, bun]));
     }
   };
 
@@ -80,7 +80,7 @@ const BurgerConstructor: FC = () => {
     <>
       <section className={styles.wrapper}>
         <div className={styles.ingredients} ref={dropTarget}>
-          {!!Object.keys(bun).length ? (
+          {!!bun ? (
             <BurgerConstructorElement
               ingredient={bun}
               onRemove={handleRemoveIngredient}
@@ -109,7 +109,7 @@ const BurgerConstructor: FC = () => {
               Перетащите сюда начинку
             </BurgerConstructorPlaceholder>
           )}
-          {!!Object.keys(bun).length ? (
+          {!!bun ? (
             <BurgerConstructorElement
               ingredient={bun}
               onRemove={handleRemoveIngredient}
@@ -130,7 +130,7 @@ const BurgerConstructor: FC = () => {
             type="primary"
             size="large"
             onClick={handleMakeOrder}
-            disabled={!Object.keys(bun).length || !filling.length}
+            disabled={!bun || !filling.length}
             htmlType="button"
           >
             Оформить заказ

@@ -38,19 +38,19 @@ export type TIngredientsStore = {
 export type TOrderStore = {
   order: {
     number: number
-  },
+  } | null,
   orderRequest: boolean,
   orderFailed: boolean,
   showDetails: boolean
 }
 
 export type TBurgerConstructorStore = {
-  bun: TConstructorIngredient,
+  bun?: TConstructorIngredient,
   filling: TConstructorIngredient[]
 }
 
 export type TAuthStore = {
-  user: TUser,
+  user?: TUser,
 
   registerRequest: boolean,
   registerFailed: boolean,
