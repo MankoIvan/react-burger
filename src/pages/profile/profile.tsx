@@ -47,7 +47,7 @@ const Profile: FC = () => {
           <ProfileComponent />
         </Route>
         <Route path={`${path}/orders`} exact>
-          <Orders />
+          <Orders isPersonal/>
         </Route>
       </div>
     </div>
