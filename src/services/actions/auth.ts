@@ -1,4 +1,4 @@
-import { AppDispatch, AppThunk } from "../../types";
+import { AppDispatch } from "../../types";
 import { TUser } from "../../types/generalTypes";
 import {
   forgotPasswordRequest,
@@ -180,7 +180,7 @@ export type TAuthActions =
   | TUpdateTokenSuccess
   | TUpdateTokenFailed;
 
-export const registerUser = (values: TRegisterUserRequestParams): AppThunk => {
+export const registerUser = (values: TRegisterUserRequestParams) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: REGISTER_REQUEST,
@@ -203,7 +203,7 @@ export const registerUser = (values: TRegisterUserRequestParams): AppThunk => {
   };
 };
 
-export const loginUser = (values: TLoginUserRequestParams): AppThunk => {
+export const loginUser = (values: TLoginUserRequestParams) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGIN_REQUEST,
@@ -226,7 +226,7 @@ export const loginUser = (values: TLoginUserRequestParams): AppThunk => {
   };
 };
 
-export const logoutUser = (): AppThunk => {
+export const logoutUser = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: LOGOUT_REQUEST,
@@ -248,9 +248,7 @@ export const logoutUser = (): AppThunk => {
   };
 };
 
-export const forgotPassword = (
-  values: TForgotPasswordRequestParams
-): AppThunk => {
+export const forgotPassword = (values: TForgotPasswordRequestParams) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: FORGOT_PASSWORD_REQUEST,
@@ -270,9 +268,7 @@ export const forgotPassword = (
   };
 };
 
-export const resetPassword = (
-  values: TResetPasswordRequestParams
-): AppThunk => {
+export const resetPassword = (values: TResetPasswordRequestParams) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: RESET_PASSWORD_REQUEST,
@@ -292,7 +288,7 @@ export const resetPassword = (
   };
 };
 
-export const getUser = (): AppThunk => {
+export const getUser = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST,
@@ -313,7 +309,7 @@ export const getUser = (): AppThunk => {
   };
 };
 
-export const updateUser = (values: TUpdateUserRequestParams): AppThunk => {
+export const updateUser = (values: TUpdateUserRequestParams) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: UPDATE_USER_REQUEST,
@@ -334,7 +330,7 @@ export const updateUser = (values: TUpdateUserRequestParams): AppThunk => {
   };
 };
 
-export const updateToken = (): AppThunk => {
+export const updateToken = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: UPDATE_TOKEN_REQUEST,

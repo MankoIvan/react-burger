@@ -1,12 +1,15 @@
-import { AppDispatch, AppThunk } from "../../types";
-import { TIngredient } from "../../types/generalTypes";
-import { makeOrderRequest } from "../../utils/api/burger-api";
+import { AppDispatch } from "../../types";
+import { TIngredient, TOrder } from "../../types/generalTypes";
+import { getOrderRequest, makeOrderRequest } from "../../utils/api/burger-api";
 import { TMakeOrderResponse } from "../../utils/api/burger-api.types";
 import {
   MAKE_ORDER_FAILED,
   MAKE_ORDER_REQUEST,
   MAKE_ORDER_SUCCESS,
   MAKE_ORDER_TOGGLE_MODAL,
+  GET_ORDER_REQUEST,
+  GET_ORDER_SUCCESS,
+  GET_ORDER_FAILED,
 } from "../constants/order";
 
 type TMakeOrderRequest = {
@@ -22,6 +25,19 @@ type TMakeOrderFailed = {
   readonly type: typeof MAKE_ORDER_FAILED;
 };
 
+type TGetOrderRequest = {
+  readonly type: typeof GET_ORDER_REQUEST;
+};
+
+type TGetOrderSuccess = {
+  readonly type: typeof GET_ORDER_SUCCESS;
+  order: TOrder | undefined;
+};
+
+type TGetOrderFailed = {
+  readonly type: typeof GET_ORDER_FAILED;
+};
+
 type TMakeOrderToggleModal = {
   readonly type: typeof MAKE_ORDER_TOGGLE_MODAL;
 };
@@ -30,9 +46,12 @@ export type TOrderActions =
   | TMakeOrderRequest
   | TMakeOrderSuccess
   | TMakeOrderFailed
-  | TMakeOrderToggleModal;
+  | TMakeOrderToggleModal
+  | TGetOrderRequest
+  | TGetOrderSuccess
+  | TGetOrderFailed;
 
-export const makeOrder = (ingredients: TIngredient[]): AppThunk => {
+export const makeOrder = (ingredients: TIngredient[]) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: MAKE_ORDER_REQUEST,
@@ -56,7 +75,28 @@ export const makeOrder = (ingredients: TIngredient[]): AppThunk => {
   };
 };
 
-export const toggleModal = (): AppThunk => {
+export const getOrder = (number: number) => {
+  return function (dispatch: AppDispatch) {
+    dispatch({
+      type: GET_ORDER_REQUEST,
+    });
+    getOrderRequest(number)
+      .then((order) => {
+        dispatch({
+          type: GET_ORDER_SUCCESS,
+          order,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_ORDER_FAILED,
+          err,
+        });
+      });
+  };
+};
+
+export const toggleModal = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: MAKE_ORDER_TOGGLE_MODAL,

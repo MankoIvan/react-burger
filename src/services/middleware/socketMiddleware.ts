@@ -16,7 +16,6 @@ export const socketMiddleware = ({
       const { type, payload } = action;
 
       if (type === actions.wsConnect) {
-        // объект класса WebSocket
         if (isSecured) {
           socket = new WebSocket(`${wsUrl}?token=${getCookie("token")}`);
         } else {
@@ -24,17 +23,14 @@ export const socketMiddleware = ({
         }
       }
       if (socket) {
-        // функция, которая вызывается при открытии сокета
         socket.onopen = () => {
           dispatch({ type: actions.wsSuccess });
         };
 
-        // функция, которая вызывается при ошибке соединения
         socket.onerror = () => {
           dispatch({ type: actions.wsError, payload: "error" });
         };
 
-        // функция, которая вызывается при получения события от сервера
         socket.onmessage = (event) => {
           const { data } = event;
           dispatch({
@@ -42,14 +38,12 @@ export const socketMiddleware = ({
             payload: JSON.parse(data),
           });
         };
-        // функция, которая вызывается при закрытии соединения
         socket.onclose = () => {
           dispatch({ type: actions.wsClosed });
         };
 
         if (type === actions.wsSendMessage) {
           const message = payload;
-          // функция для отправки сообщения на сервер
           socket.send(JSON.stringify(message));
         }
       }

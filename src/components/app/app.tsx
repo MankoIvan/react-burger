@@ -1,5 +1,5 @@
-import React, { Dispatch, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import AppHeader from "../app-header/app-header";
 import Layout from "../layout/layout";
@@ -9,6 +9,7 @@ import {
   Feed,
   ForgotPassword,
   Login,
+  OrderExplicitDetails,
   Profile,
   Register,
   ResetPassword,
@@ -22,24 +23,21 @@ import Modal from "../modal/modal";
 import Loader from "../loader/loader";
 import Ingredient from "../../pages/ingredient/ingredient";
 import NotFound from "../../pages/not-found/not-found";
-import { TLocation, TStore } from "../../types/generalTypes";
-import OrderExplicitDetails from "../order-explicit-details/order-explicit-details";
+import { TLocation } from "../../types/generalTypes";
 
 function App() {
   const location = useLocation<TLocation>();
   const history = useHistory();
   const background = location.state && location.state.background;
 
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useDispatch();
   const cookie = getCookie("token");
-  const { user, getUserFailed, loading, error } = useSelector(
-    (store: TStore) => ({
-      user: store.auth.user,
-      getUserFailed: store.auth.getUserFailed,
-      loading: store.ingredients.itemsRequest,
-      error: store.ingredients.itemsFailed,
-    })
-  );
+  const { user, getUserFailed, loading, error } = useSelector((store) => ({
+    user: store.auth.user,
+    getUserFailed: store.auth.getUserFailed,
+    loading: store.ingredients.itemsRequest,
+    error: store.ingredients.itemsFailed,
+  }));
 
   useEffect(() => {
     if (!user && cookie) {
@@ -85,22 +83,10 @@ function App() {
             <Feed />
           </Route>
           <Route path="/feed/:id" exact>
-            {loading || error ? (
-              <Loader
-                text={loading ? "Загружаемся..." : "Произошла ошибка загрузки"}
-              />
-            ) : (
-              <OrderExplicitDetails />
-            )}
+            <OrderExplicitDetails />
           </Route>
           <ProtectedRoute path="/profile/orders/:id" exact authRequired>
-            {loading || error ? (
-              <Loader
-                text={loading ? "Загружаемся..." : "Произошла ошибка загрузки"}
-              />
-            ) : (
-              <OrderExplicitDetails />
-            )}
+            <OrderExplicitDetails />
           </ProtectedRoute>
           <ProtectedRoute path="/profile" authRequired>
             <Profile />
@@ -119,19 +105,31 @@ function App() {
           </Route>
         </Switch>
         {background && (
-          <Route path="/ingredients/:id">
-            <Modal onClose={handleOnClose} header="Детали ингредиента">
-              {loading || error ? (
-                <Loader
-                  text={
-                    loading ? "Загружаемся..." : "Произошла ошибка загрузки"
-                  }
-                />
-              ) : (
-                <IngredientDetails />
-              )}
-            </Modal>
-          </Route>
+          <>
+            <Route path="/ingredients/:id">
+              <Modal onClose={handleOnClose} header="Детали ингредиента">
+                {loading || error ? (
+                  <Loader
+                    text={
+                      loading ? "Загружаемся..." : "Произошла ошибка загрузки"
+                    }
+                  />
+                ) : (
+                  <IngredientDetails />
+                )}
+              </Modal>
+            </Route>
+            <Route path="/feed/:id">
+              <Modal onClose={handleOnClose}>
+                <OrderExplicitDetails />
+              </Modal>
+            </Route>
+            <Route path="/profile/orders/:id">
+              <Modal onClose={handleOnClose}>
+                <OrderExplicitDetails />
+              </Modal>
+            </Route>
+          </>
         )}
       </MainContent>
     </Layout>

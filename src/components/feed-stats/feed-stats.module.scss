@@ -1,0 +1,37 @@
+.wrapper {
+  flex: 1;
+  padding: 60px 20px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  overflow: auto;
+}
+
+.status_boxes {
+  display: flex;
+  gap: 36px;
+}
+
+.status_box {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.numbers_container {
+  display: flex;
+  gap: 8px;
+}
+
+.digits_shadow {
+  text-shadow:
+    0px 0px 16px rgba(51, 51, 255, 0.25),
+    0px 0px 8px rgba(51, 51, 255, 0.25),
+    0px 4px 32px rgba(51, 51, 255, 0.5);
+}
+
+.numbers_column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

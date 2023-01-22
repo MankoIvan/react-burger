@@ -1,7 +1,6 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { useState, useRef, FC } from "react";
-import { useSelector } from "react-redux";
-import { TStore } from "../../types/generalTypes";
+import { useSelector } from "../../utils/hooks";
 import { groupIngredients } from "../../utils/groupIngredients";
 import IngredientsGroup from "../ingredients-group/ingredients-group";
 import Loader from "../loader/loader";
@@ -28,7 +27,7 @@ const BurgerIngredients: FC = () => {
     },
   ];
 
-  const { ingredients, loading, error } = useSelector((store: TStore) => ({
+  const { ingredients, loading, error } = useSelector((store) => ({
     ingredients: groupIngredients(store.ingredients.items),
     loading: store.ingredients.itemsRequest,
     error: store.ingredients.itemsFailed,

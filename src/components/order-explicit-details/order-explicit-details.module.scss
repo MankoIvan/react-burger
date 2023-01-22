@@ -1,0 +1,90 @@
+@import '../../constants/colors.scss';
+
+.wrapper {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.status_done {
+  color: $LIGHT_BLUE;
+}
+
+.filling {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.filling_list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 250px;
+  overflow: auto;
+  padding-right: 24px;
+}
+
+.filling_item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.image_border {
+  height: 64px;
+  width: 64px;
+  background: linear-gradient(63.18deg, #801AB3 0%, #4C4CFF 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image_background {
+  position: relative;
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: $BLACK;
+}
+
+.image_miniature {
+  position: absolute;
+  height: 56px;
+  top: 2px;
+  left: calc(-50% + 4px);
+}
+
+.filling_item_text {
+  flex-grow: 1;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.additional_info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}

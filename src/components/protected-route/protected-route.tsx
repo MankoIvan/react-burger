@@ -1,15 +1,15 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { Redirect, Route, useLocation } from "react-router-dom";
 import { TProtectedRouteProps } from "./protected-route.types";
-import { TLocation, TStore } from "../../types/generalTypes";
+import { TLocation } from "../../types/generalTypes";
 
 const ProtectedRoute: FC<TProtectedRouteProps> = ({
   authRequired = false,
   children,
   ...rest
 }) => {
-  const user = useSelector((store: TStore) => store.auth.user);
+  const user = useSelector((store) => store.auth.user);
   const location = useLocation<TLocation>();
 
   if (user && !authRequired) {

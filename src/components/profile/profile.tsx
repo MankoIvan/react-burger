@@ -1,18 +1,17 @@
-import React, { Dispatch, FormEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FormEvent } from "react";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   Button,
   Input,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useForm } from "../../hooks/use-form";
+import { useForm } from "../../utils/use-form";
 import styles from "./profile.module.scss";
 import { updateUser } from "../../services/actions/auth";
-import { TStore } from "../../types/generalTypes";
 
 const Profile = () => {
-  const user = useSelector((store: TStore) => store.auth.user);
+  const user = useSelector((store) => store.auth.user);
 
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useDispatch();
 
   const { values, handleValues, setValues } = useForm({
     name: user?.name || "",
@@ -54,17 +53,6 @@ const Profile = () => {
         errorText={"Ошибка"}
         size={"default"}
       />
-      {/* <Input
-          type={"password"}
-          placeholder={"Пароль"}
-          onChange={handleValues}
-          icon={"EditIcon"}
-          value={values.password}
-          name={"password"}
-          error={false}
-          errorText={"Ошибка"}
-          size={"default"}
-        /> */}
       <div
         className={`${styles.cta_block} ${
           CtaVisible ? styles.cta_block__visible : ""

@@ -2,9 +2,9 @@
 
 .page_wrapper {
   display: flex;
-  align-items: center;
   justify-content: center;
   padding-top: 120px;
+  height: calc(100% - 120px);
 }
 
 .wrapper {
@@ -12,7 +12,8 @@
   gap: 60px;
   align-items: flex-start;
   justify-content: flex-start;
-  max-width: 1240px;
+  padding: 0 20px;
+  width: 100%;
 }
 
 .nav_wrapper {

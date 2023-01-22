@@ -5,7 +5,7 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
 } from "../constants/ingredients";
-import { AppDispatch, AppThunk } from "../../types";
+import { AppDispatch } from "../../types";
 
 type TGetIngredientsRequest = {
   readonly type: typeof GET_INGREDIENTS_REQUEST;
@@ -25,7 +25,7 @@ export type TIngredientsActons =
   | TGetIngredientsSuccess
   | TGetIngredientsFailed;
 
-export const getIngredients = (): AppThunk => {
+export const getIngredients = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,

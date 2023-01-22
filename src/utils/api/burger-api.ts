@@ -5,7 +5,7 @@ import {
   PASSWORD_URL,
   USER_URL,
 } from "../../constants/api";
-import { TIngredient, TUser } from "../../types/generalTypes";
+import { TIngredient, TOrder, TUser } from "../../types/generalTypes";
 import { checkReponse } from "../checkResponse";
 import { getCookie } from "../cookie";
 import {
@@ -46,6 +46,19 @@ export const makeOrderRequest = (
   })
     .then(checkReponse)
     .catch((err) => Promise.reject(err));
+};
+
+export const getOrderRequest = (
+  number: number
+): Promise<TOrder | undefined> => {
+  return fetch(`${ORDER_URL}/${number}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(checkReponse)
+    .then(({ orders }) => orders[0] || undefined);
 };
 
 export const registerUserRequest = ({

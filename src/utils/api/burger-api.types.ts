@@ -66,5 +66,5 @@ export type TUpdateUserRequest = {
 
 export type TUpdateTokenResponse = ApiResponse & {
   accessToken: string;
-  refreshToken: string
+  refreshToken: string;
 };

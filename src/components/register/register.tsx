@@ -1,5 +1,5 @@
-import React, { Dispatch, FC, FormEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, FormEvent } from "react";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   Button,
   Input,
@@ -7,10 +7,9 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { useForm } from "../../hooks/use-form";
+import { useForm } from "../../utils/use-form";
 import styles from "./register.module.scss";
 import { registerUser } from "../../services/actions/auth";
-import { TStore } from "../../types/generalTypes";
 
 const Register: FC = () => {
   const { values, handleValues } = useForm({
@@ -19,14 +18,14 @@ const Register: FC = () => {
     password: "",
   });
 
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useDispatch();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(registerUser(values));
   };
 
-  const user = useSelector((store: TStore) => store.auth.user);
+  const user = useSelector((store) => store.auth.user);
 
   if (user) {
     return <Redirect to="/" />;

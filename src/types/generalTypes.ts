@@ -42,6 +42,9 @@ export type TOrderStore = {
   orderRequest: boolean;
   orderFailed: boolean;
   showDetails: boolean;
+  explicitOrder: TOrder | undefined;
+  explicitOrderRequest: boolean;
+  explicitOrderFailed: boolean;
 };
 
 export type TBurgerConstructorStore = {
@@ -78,23 +81,18 @@ export type TAuthStore = {
   updateTokenFailed: boolean;
 };
 
-export type TWSStatus = "OFFLINE" | "ONLINE" | "CONNECTING";
+export enum TWSStatus {
+  OFFLINE = "OFFLINE",
+  ONLINE = "ONLINE",
+  CONNECTING = "CONNECTING",
+}
 
 export type TWSFeedStore = {
-  status: TWSStatus;
+  status: `${TWSStatus}`;
   orders: TOrder[];
   total: number | null;
   totalToday: number | null;
   error: string;
-};
-
-export type TStore = {
-  ingredients: TIngredientsStore;
-  order: TOrderStore;
-  burgerConstructor: TBurgerConstructorStore;
-  auth: TAuthStore;
-  feedAll: TWSFeedStore;
-  feed: TWSFeedStore;
 };
 
 export type TOrderStatus = "done" | "pending" | "created";
@@ -104,8 +102,9 @@ export type TOrder = {
   _id: string;
   status: TOrderStatus;
   number: number;
-  createdAt: Date;
-  updatedAt: Date;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TWSOrdersResponse = {

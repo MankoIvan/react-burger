@@ -1,4 +1,4 @@
-import { TWSFeedStore } from "../../types/generalTypes";
+import { TWSFeedStore, TWSStatus } from "../../types/generalTypes";
 import { TWSFeedAllActions } from "../actions/ws-feed-all";
 import {
   WS_FEED_ALL_CONNECTION_START,
@@ -9,7 +9,7 @@ import {
 } from "../constants/ws-feed-all";
 
 const initialState: TWSFeedStore = {
-  status: "OFFLINE",
+  status: TWSStatus.OFFLINE,
   orders: [],
   total: null,
   totalToday: null,
@@ -24,13 +24,13 @@ export const wsFeedAllReducer = (
     case WS_FEED_ALL_CONNECTION_START: {
       return {
         ...state,
-        status: "CONNECTING",
+        status: TWSStatus.CONNECTING,
       };
     }
     case WS_FEED_ALL_CONNECTION_SUCCESS: {
       return {
         ...state,
-        status: "ONLINE",
+        status: TWSStatus.ONLINE,
         error: "",
       };
     }
@@ -43,7 +43,7 @@ export const wsFeedAllReducer = (
     case WS_FEED_ALL_CONNECTION_CLOSED: {
       return {
         ...state,
-        status: "OFFLINE",
+        status: TWSStatus.OFFLINE,
       };
     }
     case WS_FEED_ALL_GET_MESSAGE: {

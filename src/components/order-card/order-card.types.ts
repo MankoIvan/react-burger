@@ -1,6 +1,6 @@
 import { TOrder } from "../../types/generalTypes";
 
-export type TOrdersProps = {
-  orders: TOrder[];
+export type TOrderCardProps = {
+  order: TOrder;
   hideStatus?: boolean;
 };

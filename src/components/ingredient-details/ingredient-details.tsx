@@ -1,14 +1,13 @@
 import React, { FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useParams } from "react-router-dom";
-import { TStore } from "../../types/generalTypes";
 import Loader from "../loader/loader";
 import styles from "./ingredient-details.module.scss";
 
 const IngredientDetails: FC = () => {
   const { id }: { id: string } = useParams();
 
-  const ingredients = useSelector((store: TStore) => store.ingredients.items);
+  const ingredients = useSelector((store) => store.ingredients.items);
   const ingredient = ingredients.find((item) => item._id === id);
 
   return ingredient ? (

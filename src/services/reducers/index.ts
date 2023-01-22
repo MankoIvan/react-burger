@@ -12,6 +12,6 @@ export const rootReducer = combineReducers({
   order: orderReducer,
   burgerConstructor: burgerConstructorReducer,
   auth: authReducer,
-  feedALL: wsFeedAllReducer,
+  feedAll: wsFeedAllReducer,
   feed: wsFeedReducer,
 });

@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
-import { AppDispatch, AppThunk } from "../../types";
+import { AppDispatch } from "../../types";
 import { TIngredient, TConstructorIngredient } from "../../types/generalTypes";
 import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
@@ -28,7 +28,7 @@ export type TBurgerConstructorActions =
   | TRemoveIngredient
   | TSwitchIngredients;
 
-export const addIngredient = (ingredient: TIngredient): AppThunk => {
+export const addIngredient = (ingredient: TIngredient) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: ADD_INGREDIENT_TO_CONSTRUCTOR,
@@ -39,7 +39,7 @@ export const addIngredient = (ingredient: TIngredient): AppThunk => {
     });
   };
 };
-export const removeIngredient = (uuid: string): AppThunk => {
+export const removeIngredient = (uuid: string) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
@@ -47,7 +47,7 @@ export const removeIngredient = (uuid: string): AppThunk => {
     });
   };
 };
-export const switchIngredients = (id_1: number, id_2: number): AppThunk => {
+export const switchIngredients = (id_1: number, id_2: number) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: SWITCH_INGREDIENTS_IN_CONSTRUCTOR,

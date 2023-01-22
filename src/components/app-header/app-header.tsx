@@ -23,7 +23,6 @@ const AppHeader: FC = () => {
           </NavLink>
           <NavLink
             to="/feed"
-            exact
             className={styles.nav_link}
             activeClassName={styles.nav_link__active}
           >
@@ -37,7 +36,6 @@ const AppHeader: FC = () => {
         <div className={styles.nav_right}>
           <NavLink
             to="/profile"
-            exact
             className={styles.nav_link}
             activeClassName={styles.nav_link__active}
           >

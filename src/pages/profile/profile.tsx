@@ -1,13 +1,33 @@
-import React, { Dispatch, FC } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC, useEffect } from "react";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import { NavLink, Route, useRouteMatch } from "react-router-dom";
 import Orders from "../../components/orders/orders";
 import ProfileComponent from "../../components/profile/profile";
 import { logoutUser } from "../../services/actions/auth";
+import {
+  WS_FEED_CONNECTION_CLOSED,
+  WS_FEED_CONNECTION_START,
+} from "../../services/constants/ws-feed";
 import styles from "./profile.module.scss";
 
 const Profile: FC = () => {
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: WS_FEED_CONNECTION_START,
+    });
+
+    return () => {
+      dispatch({
+        type: WS_FEED_CONNECTION_CLOSED,
+      });
+    };
+  }, [dispatch]);
+
+  const { orders } = useSelector((store) => ({
+    orders: store.feed.orders,
+  }));
 
   const onLogOut = () => {
     dispatch(logoutUser());
@@ -47,7 +67,7 @@ const Profile: FC = () => {
           <ProfileComponent />
         </Route>
         <Route path={`${path}/orders`} exact>
-          <Orders isPersonal/>
+          <Orders orders={orders} />
         </Route>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, Dispatch, FC } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect, FC } from "react";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import styles from "./burger-constructor.module.scss";
 import {
   CurrencyIcon,
@@ -17,16 +17,17 @@ import { useDrop } from "react-dnd";
 import BurgerConstructorElement from "../burger-constructor-element/burger-constructor-element";
 import BurgerConstructorPlaceholder from "../burger-constructor-placeholder/burger-constructor-placeholder";
 import { useHistory, useLocation } from "react-router-dom";
-import { TIngredient, TStore } from "../../types/generalTypes";
+import { TIngredient } from "../../types/generalTypes";
+import { countPrice } from "../../utils/countPrice";
 
 const BurgerConstructor: FC = () => {
-  const [totatlPrice, setTotatlPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const history = useHistory();
   const location = useLocation();
 
   const { bun, filling, orderData, loading, error, showDetails, user } =
-    useSelector((store: TStore) => ({
+    useSelector((store) => ({
       bun: store.burgerConstructor.bun,
       filling: store.burgerConstructor.filling,
       orderData: store.order.order,
@@ -36,21 +37,17 @@ const BurgerConstructor: FC = () => {
       user: store.auth.user,
     }));
 
-  const dispatch: Dispatch<any> = useDispatch();
-
-  const countPrice = (ingredients: Array<TIngredient | undefined>) => {
-    return ingredients.reduce((acc, item) => acc + (item?.price || 0), 0);
-  };
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setTotatlPrice(countPrice([...filling, bun, bun]) || 0);
+    setTotalPrice(countPrice([...filling, bun, bun]) || 0);
   }, [filling, bun]);
 
   const handleMakeOrder = () => {
     if (!user) {
       return history.push({ pathname: "/login", state: { from: location } });
     } else {
-      bun && dispatch(makeOrder([...filling, bun, bun]));
+      bun && dispatch(makeOrder([bun, ...filling, bun]));
     }
   };
 
@@ -123,7 +120,7 @@ const BurgerConstructor: FC = () => {
         </div>
         <div className={styles.cta_block}>
           <div className={styles.price}>
-            <p className="text text_type_main-large">{totatlPrice}</p>
+            <p className="text text_type_main-large">{totalPrice}</p>
             <CurrencyIcon type="primary" />
           </div>
           <Button
