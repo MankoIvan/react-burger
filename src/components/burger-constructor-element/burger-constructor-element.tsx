@@ -1,5 +1,5 @@
-import React, { Dispatch, FC } from "react";
-import { useDispatch } from "react-redux";
+import React, { FC } from "react";
+import { useDispatch } from "../../utils/hooks";
 import styles from "./burger-constructor-element.module.scss";
 import {
   DragIcon,
@@ -18,14 +18,14 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({
 }) => {
   const draggable = ingredient.type !== "bun";
 
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useDispatch();
 
   const handleRemoveIngredient = () => {
     onRemove(ingredient._uuid);
   };
 
   const onDropHandler = ({ dragIndex }: { dragIndex: number }) => {
-    dispatch(switchIngredients(dragIndex, index));
+    index && dispatch(switchIngredients(dragIndex, index));
   };
 
   const [{ isDrag }, dragRef] = useDrag({

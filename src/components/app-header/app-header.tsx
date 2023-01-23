@@ -6,7 +6,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.scss";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 const AppHeader: FC = () => {
   return (
     <header className={styles.header}>
@@ -22,8 +22,7 @@ const AppHeader: FC = () => {
             <p className="text text_type_main-default">Конструктор</p>
           </NavLink>
           <NavLink
-            to="/orders-list"
-            exact
+            to="/feed"
             className={styles.nav_link}
             activeClassName={styles.nav_link__active}
           >
@@ -31,13 +30,12 @@ const AppHeader: FC = () => {
             <p className="text text_type_main-default">Лента заказов</p>
           </NavLink>
         </div>
-        <div className={styles.nav_logo}>
+        <Link className={styles.nav_logo} to="/">
           <Logo />
-        </div>
+        </Link>
         <div className={styles.nav_right}>
           <NavLink
             to="/profile"
-            exact
             className={styles.nav_link}
             activeClassName={styles.nav_link__active}
           >

@@ -1,20 +1,19 @@
-import React, { Dispatch, FormEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FormEvent } from "react";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   Button,
   Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { useForm } from "../../hooks/use-form";
+import { useForm } from "../../utils/use-form";
 import styles from "./reset-password.module.scss";
 import { resetPassword } from "../../services/actions/auth";
-import { TStore } from "../../types/generalTypes";
 
 const ResetPassword = () => {
   const { values, handleValues } = useForm({ password: "", token: "" });
 
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useDispatch();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -22,7 +21,7 @@ const ResetPassword = () => {
   };
 
   const forgotPasswordSuccess = useSelector(
-    (store: TStore) => store.auth.forgotPasswordSuccess
+    (store) => store.auth.forgotPasswordSuccess
   );
 
   if (!forgotPasswordSuccess) {

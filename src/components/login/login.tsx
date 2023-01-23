@@ -1,27 +1,26 @@
-import React, { Dispatch, FC, FormEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { FC, FormEvent } from "react";
+import { useDispatch, useSelector } from "../../utils/hooks";
 import {
   Button,
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, Redirect } from "react-router-dom";
-import { useForm } from "../../hooks/use-form";
+import { useForm } from "../../utils/use-form";
 import styles from "./login.module.scss";
 import { loginUser } from "../../services/actions/auth";
-import { TStore } from "../../types/generalTypes";
 
 const Login: FC = () => {
   const { values, handleValues } = useForm({ email: "", password: "" });
 
-  const dispatch: Dispatch<any> = useDispatch();
+  const dispatch = useDispatch();
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
     dispatch(loginUser(values));
   };
 
-  const user = useSelector((store: TStore) => store.auth.user);
+  const user = useSelector((store) => store.auth.user);
 
   if (user) {
     return <Redirect to="/" />;

@@ -32,7 +32,13 @@
   justify-content: flex-end;
 }
 
-.nav_logo {}
+.nav_logo {
+  cursor: pointer;
+  transition: all 0.25s ease;
+  &:hover {
+    opacity: 0.8;
+  }
+}
 
 .nav_link {
   padding: 16px 20px;

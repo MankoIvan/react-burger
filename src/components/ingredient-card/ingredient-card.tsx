@@ -4,15 +4,14 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./ingredient-card.module.scss";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../utils/hooks";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 import { TIngredientCardProps } from "./ingredient-card.types";
-import { TStore } from "../../types/generalTypes";
 
 const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   const location = useLocation();
-  const { bun, filling } = useSelector((store: TStore) => ({
+  const { bun, filling } = useSelector((store) => ({
     bun: store.burgerConstructor.bun,
     filling: store.burgerConstructor.filling,
   }));
@@ -20,7 +19,7 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
   const ingredients = [...filling, bun, bun];
 
   const count = ingredients.reduce((acc, item) => {
-    return (acc += ingredient._id === item._id ? 1 : 0);
+    return (acc += ingredient._id === item?._id ? 1 : 0);
   }, 0);
 
   const [{ isDrag }, dragRef] = useDrag({
