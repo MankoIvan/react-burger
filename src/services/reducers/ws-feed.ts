@@ -8,7 +8,7 @@ import {
   WS_FEED_GET_MESSAGE,
 } from "../constants/ws-feed";
 
-const initialState: TWSFeedStore = {
+export const initialState: TWSFeedStore = {
   status: TWSStatus.OFFLINE,
   orders: [],
   total: null,

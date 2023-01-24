@@ -57,7 +57,6 @@ type TRegisterUserSuccess = {
 
 type TRegisterUserFailed = {
   readonly type: typeof REGISTER_FAILED;
-  err: any;
 };
 
 type TLoginUserRequest = {
@@ -71,7 +70,6 @@ type TLoginUserSuccess = {
 
 type TLoginUserFailed = {
   readonly type: typeof LOGIN_FAILED;
-  err: any;
 };
 
 type TLogoutUserRequest = {
@@ -84,7 +82,6 @@ type TLogoutUserSuccess = {
 
 type TLogoutUserFailed = {
   readonly type: typeof LOGOUT_FAILED;
-  err: any;
 };
 
 type TForgotPasswordRequest = {
@@ -97,7 +94,6 @@ type TForgotPasswordSuccess = {
 
 type TForgotPasswordFailed = {
   readonly type: typeof FORGOT_PASSWORD_FAILED;
-  err: any;
 };
 
 type TResetPasswordRequest = {
@@ -110,7 +106,6 @@ type TResetPasswordSuccess = {
 
 type TResetPasswordFailed = {
   readonly type: typeof RESET_PASSWORD_FAILED;
-  err: any;
 };
 
 type TGetUserRequest = {
@@ -124,7 +119,6 @@ type TGetUserSuccess = {
 
 type TGetUserFailed = {
   readonly type: typeof GET_USER_FAILED;
-  err: any;
 };
 
 type TUpdateUserRequest = {
@@ -138,7 +132,6 @@ type TUpdateUserSuccess = {
 
 type TUpdateUserFailed = {
   readonly type: typeof UPDATE_USER_FAILED;
-  err: any;
 };
 
 type TUpdateTokenRequest = {
@@ -151,7 +144,6 @@ type TUpdateTokenSuccess = {
 
 type TUpdateTokenFailed = {
   readonly type: typeof UPDATE_TOKEN_FAILED;
-  err: any;
 };
 
 export type TAuthActions =

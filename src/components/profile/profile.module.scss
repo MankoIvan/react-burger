@@ -14,6 +14,7 @@
   opacity: 0;
   pointer-events: none;
   transition: all 0.25s ease;
+  max-width: 480px;
 
   &__visible {
     opacity: 1;

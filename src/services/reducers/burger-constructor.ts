@@ -6,7 +6,7 @@ import {
   SWITCH_INGREDIENTS_IN_CONSTRUCTOR
 } from '../constants/burger-constructor'
 
-const initialState: TBurgerConstructorStore = {
+export const initialState: TBurgerConstructorStore = {
   bun: undefined,
   filling: []
 };
