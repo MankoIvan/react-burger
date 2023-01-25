@@ -55,6 +55,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({
     <div
       className={styles.ingredient_wrapper}
       ref={draggable ? dropTarget : undefined}
+      data-test="ingredient-element"
     >
       <div
         className={`${styles.ingredient} ${draggable ? styles.draggable : ""} ${
