@@ -10,7 +10,7 @@ import {
   GET_ORDER_FAILED,
 } from "../constants/order";
 
-const initialState: TOrderStore = {
+export const initialState: TOrderStore = {
   order: null,
   orderRequest: false,
   orderFailed: false,

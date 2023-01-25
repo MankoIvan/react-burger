@@ -27,7 +27,7 @@ import {
   UPDATE_TOKEN_FAILED
 } from "../constants/auth";
 
-const initialState: TAuthStore = {
+export const initialState: TAuthStore = {
   user: undefined,
 
   registerRequest: false,

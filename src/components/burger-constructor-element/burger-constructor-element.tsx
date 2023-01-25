@@ -16,6 +16,11 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({
   position,
   index,
 }) => {
+  const additionalBunText = {
+    top: " (верх)",
+    bottom: " (низ)",
+  };
+
   const draggable = ingredient.type !== "bun";
 
   const dispatch = useDispatch();
@@ -50,6 +55,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({
     <div
       className={styles.ingredient_wrapper}
       ref={draggable ? dropTarget : undefined}
+      data-test="ingredient-element"
     >
       <div
         className={`${styles.ingredient} ${draggable ? styles.draggable : ""} ${
@@ -61,7 +67,7 @@ const BurgerConstructorElement: FC<TBurgerConstructorElementProps> = ({
         <ConstructorElement
           type={position}
           text={`${ingredient.name}${
-            position && position === "top" ? " (верх)" : " (низ)"
+            position ? additionalBunText[position] : ""
           }`}
           price={ingredient.price}
           thumbnail={ingredient.image_mobile}

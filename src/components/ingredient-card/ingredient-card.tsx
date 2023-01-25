@@ -40,6 +40,7 @@ const IngredientCard: FC<TIngredientCardProps> = ({ ingredient }) => {
       className={`${styles.ingredient} 
       ${!!isDrag ? styles.dragged : ""}`}
       ref={dragRef}
+      data-test={ingredient.name}
     >
       <img
         src={ingredient.image}

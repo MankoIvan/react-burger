@@ -6,7 +6,7 @@ import {
   GET_INGREDIENTS_FAILED
 } from "../constants/ingredients";
 
-const initialState: TIngredientsStore = {
+export const initialState: TIngredientsStore = {
   items: [],
   itemsRequest: false,
   itemsFailed: false
